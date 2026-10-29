@@ -29,3 +29,22 @@ tabla_resumen_temperatura <- function(datos, variable) {
     ) |>
     tidyr::pivot_wider(names_from = id, values_from = valor)
 }
+
+grafico_temperatura_mensual <- function(datos, colores, titulo = "Temperatura") {
+  datos |>
+    dplyr::group_by(id, mes = lubridate::month(fecha)) |>
+    dplyr::summarise(
+      temperatura_media = mean(temperatura_abrigo_150cm, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    ggplot2::ggplot(ggplot2::aes(mes, temperatura_media)) +
+    ggplot2::geom_line(ggplot2::aes(color = id)) +
+    ggplot2::scale_color_manual(values = colores) +
+    ggplot2::labs(
+      title = titulo,
+      x = "Mes",
+      y = "Temperatura media",
+      color = "Estacion"
+    ) +
+    ggplot2::theme_minimal()
+}
