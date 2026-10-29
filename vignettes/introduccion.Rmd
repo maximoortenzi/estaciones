@@ -1,0 +1,123 @@
+---
+title: "Introducción al paquete estaciones"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introducción al paquete estaciones}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(estaciones)
+```
+
+## ¿Qué hace este paquete?
+
+`estaciones` reúne funciones para trabajar con los datos meteorológicos de
+cinco estaciones del INTA de la provincia de Santa Fe: Oliveros (`NH0472`),
+Las Rosas (`NH0910`), Zavalla (`NH0046`), Rafaela (`NH0098`) y Reconquista
+(`NH0437`).
+
+Con el paquete podés:
+
+- descargar los datos de cualquier estación a partir de su identificador,
+- calcular la media y el desvío estándar de una variable de temperatura,
+- graficar el ciclo anual de temperatura de una o más estaciones.
+
+## Instalación
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("maximoortenzi/estaciones")
+```
+
+## Los datos incluidos
+
+El paquete trae dos conjuntos de datos listos para usar:
+
+- `estaciones`: las observaciones diarias de las cinco estaciones, con 35
+  variables meteorológicas.
+- `metadatos`: la ubicación, las coordenadas y el período de funcionamiento de
+  las 258 estaciones disponibles.
+
+```{r}
+estaciones
+```
+
+```{r}
+metadatos
+```
+
+## Descargar los datos de una estación
+
+`datos_estacion()` recibe el identificador de la estación y la ruta donde se
+guarda el archivo. Si el archivo todavía no existe lo descarga, y después lo
+lee como un `tibble`.
+
+```{r, eval = FALSE}
+estacion_NH0437 <- datos_estacion("NH0437", "datos/NH0437.csv")
+estacion_NH0437
+```
+
+El archivo queda guardado en disco, así que la próxima vez que llames a la
+función no lo vuelve a descargar: solo lo lee. Para trabajar con las cinco
+estaciones juntas podés combinar las descargas:
+
+```{r, eval = FALSE}
+ids <- c("NH0472", "NH0910", "NH0046", "NH0098", "NH0437")
+
+santa_fe <- purrr::map_df(
+  ids,
+  ~ datos_estacion(.x, paste0("datos/", .x, ".csv"))
+)
+```
+
+## Resumen de temperatura
+
+`tabla_resumen_temperatura()` calcula la media y el desvío estándar de una
+variable de temperatura para cada estación. La variable se pasa **sin
+comillas**.
+
+```{r}
+tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
+```
+
+Como la variable es un argumento, la misma función sirve para cualquier otra
+columna de temperatura:
+
+```{r}
+tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
+```
+
+## Gráfico de temperatura mensual
+
+`grafico_temperatura_mensual()` calcula el promedio mensual de la temperatura
+de abrigo y devuelve un gráfico con una línea por estación. Recibe los colores
+y, opcionalmente, el título (por defecto `"Temperatura"`).
+
+```{r, fig.width = 7, fig.height = 4}
+grafico_temperatura_mensual(
+  estaciones,
+  colores = c("darkorange", "purple", "cyan4", "steelblue", "pink3"),
+  titulo = "Ciclo anual de temperatura"
+)
+```
+
+Si querés graficar una sola estación, filtrá los datos antes de pasarle la
+tabla:
+
+```{r, fig.width = 7, fig.height = 4}
+estaciones |>
+  dplyr::filter(id == "NH0437") |>
+  grafico_temperatura_mensual(
+    colores = "darkorange",
+    titulo = "Reconquista"
+  )
+```
