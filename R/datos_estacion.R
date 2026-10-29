@@ -14,3 +14,18 @@ datos_estacion <- function(id, ruta_archivo) {
   cli::cli_inform(c("v" = "Leyendo los datos"))
   readr::read_csv(file, show_col_types = FALSE)
 }
+
+tabla_resumen_temperatura <- function(datos, variable) {
+  datos |>
+    dplyr::group_by(id) |>
+    dplyr::summarise(
+      media = mean({{ variable }}, na.rm = TRUE),
+      desvio = stats::sd({{ variable }}, na.rm = TRUE)
+    ) |>
+    tidyr::pivot_longer(
+      cols = c("media", "desvio"),
+      names_to = "variable",
+      values_to = "valor"
+    ) |>
+    tidyr::pivot_wider(names_from = id, values_from = valor)
+}
