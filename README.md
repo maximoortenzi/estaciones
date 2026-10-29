@@ -3,8 +3,12 @@
 
 # estaciones
 
+<img src="man/figures/logo.png" align="right" height="139" alt="" />
+
 <!-- badges: start -->
 
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 El paquete `estaciones` reúne funciones para descargar, leer, resumir y
@@ -65,3 +69,12 @@ grafico_temperatura_mensual(
 
 - Máximo Ortenzi
 - Santiago Ramuchio
+
+## Cómo contribuir
+
+Para contribuir con este paquete podés leer la [guía de
+contribución](.github/CONTRIBUTING.md).
+
+Tené en cuenta que el proyecto `estaciones` se publica con un [Código de
+Conducta para Contribuyentes](CODE_OF_CONDUCT.md). Al contribuir con
+este proyecto aceptás respetar sus términos.
