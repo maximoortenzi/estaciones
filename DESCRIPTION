@@ -12,7 +12,7 @@ Description: Herramientas para descargar, leer, resumir y graficar los datos
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/maximoortenzi/estaciones
+URL: https://github.com/maximoortenzi/estaciones, https://maximoortenzi.github.io/estaciones/
 BugReports: https://github.com/maximoortenzi/estaciones/issues
 Imports: 
     cli,
