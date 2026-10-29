@@ -1,0 +1,71 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# estaciones
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+El paquete `estaciones` reúne funciones para descargar, leer, resumir y
+graficar los datos meteorológicos de las estaciones del INTA.
+
+Incluye los datos de cinco estaciones de la provincia de Santa Fe (Oliveros,
+Las Rosas, Zavalla, Rafaela y Reconquista) y los metadatos de las 258
+estaciones disponibles en el repositorio del libro *Introducción a la
+Programación II*.
+
+## Instalación
+
+Podés instalar la versión en desarrollo desde GitHub con:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("maximoortenzi/estaciones")
+```
+
+## Ejemplo
+
+Descargá y leé los datos de una estación a partir de su identificador:
+
+```{r ejemplo-descarga, eval = FALSE}
+library(estaciones)
+
+datos_estacion("NH0437", "datos/NH0437.csv")
+```
+
+Si no querés descargar nada, el paquete ya trae los datos de las cinco
+estaciones. Con ellos podés calcular la media y el desvío estándar de la
+temperatura de cada estación:
+
+```{r ejemplo-resumen}
+library(estaciones)
+
+tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
+```
+
+Y graficar el ciclo anual de temperatura:
+
+```{r ejemplo-grafico, fig.width = 7, fig.height = 4}
+grafico_temperatura_mensual(
+  estaciones,
+  colores = c("darkorange", "purple", "cyan4", "steelblue", "pink3"),
+  titulo = "Ciclo anual de temperatura"
+)
+```
+
+## Autores
+
+- Máximo Ortenzi
+- Santiago Ramuchio
