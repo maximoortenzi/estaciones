@@ -11,3 +11,14 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.1.0
 URL: https://github.com/maximoortenzi/estaciones
 BugReports: https://github.com/maximoortenzi/estaciones/issues
+Imports: 
+    cli,
+    dplyr,
+    ggplot2,
+    here,
+    lubridate,
+    readr,
+    tidyr
+Depends: 
+    R (>= 3.5)
+LazyData: true
