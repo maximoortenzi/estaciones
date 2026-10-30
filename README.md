@@ -9,6 +9,9 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/maximoortenzi/estaciones/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/maximoortenzi/estaciones/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/maximoortenzi/estaciones/graph/badge.svg)](https://app.codecov.io/gh/maximoortenzi/estaciones)
 <!-- badges: end -->
 
 El paquete `estaciones` reúne funciones para descargar, leer, resumir y
