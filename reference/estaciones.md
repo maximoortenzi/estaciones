@@ -164,3 +164,29 @@ Un `tibble` con 95681 filas y 35 variables:
 Algunas columnas quedaron como `logical` con todos sus valores perdidos
 (`NA`) porque no tienen datos para estas estaciones en el archivo
 original. Es esperable y no es un error del paquete.
+
+## Examples
+
+``` r
+estaciones
+#> # A tibble: 95,681 × 35
+#>    id     fecha      temperatura_abrigo_150cm temperatura_abrigo_150cm_maxima
+#>    <chr>  <date>                        <dbl>                           <dbl>
+#>  1 NH0472 1961-07-01                     11.1                            13.4
+#>  2 NH0472 1961-07-02                      5.5                            10.5
+#>  3 NH0472 1961-07-03                      6                              10.8
+#>  4 NH0472 1961-07-04                     NA                              NA  
+#>  5 NH0472 1961-07-05                     12.4                            14.8
+#>  6 NH0472 1961-07-06                     11                              16.5
+#>  7 NH0472 1961-07-07                      7                              10  
+#>  8 NH0472 1961-07-08                      5.6                            10  
+#>  9 NH0472 1961-07-09                     NA                              NA  
+#> 10 NH0472 1961-07-10                      8.4                            12.1
+#> # ℹ 95,671 more rows
+#> # ℹ 31 more variables: temperatura_abrigo_150cm_minima <dbl>,
+#> #   temperatura_intemperie_5cm_minima <dbl>,
+#> #   temperatura_intemperie_50cm_minima <dbl>,
+#> #   temperatura_suelo_5cm_media <dbl>, temperatura_suelo_10cm_media <dbl>,
+#> #   temperatura_inte_5cm <lgl>, temperatura_intemperie_150cm_minima <lgl>,
+#> #   humedad_suelo <lgl>, precipitacion_pluviometrica <dbl>, granizo <dbl>, …
+```
