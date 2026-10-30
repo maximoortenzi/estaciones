@@ -17,6 +17,10 @@ coverage](https://codecov.io/gh/maximoortenzi/estaciones/graph/badge.svg)](https
 El paquete `estaciones` reúne funciones para descargar, leer, resumir y
 graficar los datos meteorológicos de las estaciones del INTA.
 
+> **Este paquete es un trabajo práctico** de la materia *Introducción a
+> la Programación II*. Fue creado con fines educativos y no está pensado
+> para ser usado como un paquete de producción.
+
 Incluye los datos de cinco estaciones de la provincia de Santa Fe
 (Oliveros, Las Rosas, Zavalla, Rafaela y Reconquista) y los metadatos de
 las 258 estaciones disponibles en el repositorio del libro *Introducción

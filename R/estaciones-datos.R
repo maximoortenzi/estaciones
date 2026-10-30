@@ -48,6 +48,9 @@
 #'   \item{unidad_frio}{unidades de frio acumuladas}
 #' }
 #'
+#' @examples
+#' estaciones
+#'
 #' @source <https://github.com/rse-r/intro-programacion/tree/main/datos>
 "estaciones"
 
@@ -71,6 +74,9 @@
 #'   \item{desde}{fecha desde la que hay registros}
 #'   \item{hasta}{fecha hasta la que hay registros}
 #' }
+#'
+#' @examples
+#' metadatos
 #'
 #' @source <https://github.com/rse-r/intro-programacion/tree/main/datos>
 "metadatos"

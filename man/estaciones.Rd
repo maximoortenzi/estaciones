@@ -61,4 +61,8 @@ Algunas columnas quedaron como \code{logical} con todos sus valores perdidos
 (\code{NA}) porque no tienen datos para estas estaciones en el archivo original.
 Es esperable y no es un error del paquete.
 }
+\examples{
+estaciones
+
+}
 \keyword{datasets}

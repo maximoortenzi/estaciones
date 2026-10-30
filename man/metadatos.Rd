@@ -31,4 +31,8 @@ Informacion de las 258 estaciones meteorologicas disponibles en el
 repositorio del libro: ubicacion, coordenadas, altura y periodo de
 funcionamiento de cada una.
 }
+\examples{
+metadatos
+
+}
 \keyword{datasets}
