@@ -7,8 +7,9 @@
 #' @param datos Un `data.frame` o `tibble` con los datos de una o mas
 #'   estaciones. Tiene que tener la columna `id` y la variable que se quiere
 #'   resumir.
-#' @param variable La variable de temperatura que se quiere resumir, sin
-#'   comillas. Por ejemplo `temperatura_abrigo_150cm`.
+#' @param variable La variable de temperatura que se quiere resumir. Se puede
+#'   pasar sin comillas, por ejemplo `temperatura_abrigo_150cm`, o como texto,
+#'   por ejemplo `"temperatura_abrigo_150cm"`.
 #'
 #' @return Un `tibble` con dos filas (`media` y `desvio`) y una columna por
 #'   estacion.
@@ -18,13 +19,43 @@
 #'
 #' tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
 #'
+#' @importFrom rlang .data
 #' @export
 tabla_resumen_temperatura <- function(datos, variable) {
+  if (!is.data.frame(datos)) {
+    cli::cli_abort(
+      "{.arg datos} tiene que ser un data frame o un tibble, no {.cls {class(datos)[1]}}."
+    )
+  }
+
+  if (nrow(datos) == 0) {
+    cli::cli_abort("{.arg datos} no tiene filas para resumir.")
+  }
+
+  if (!"id" %in% names(datos)) {
+    cli::cli_abort("{.arg datos} tiene que tener una columna {.field id}.")
+  }
+
+  nombre <- rlang::as_name(rlang::enquo(variable))
+
+  if (!nombre %in% names(datos)) {
+    cli::cli_abort(c(
+      "No existe la columna {.field {nombre}} en {.arg datos}.",
+      "i" = "Revis\u00e1 el nombre: pod\u00e9s ver las columnas con {.code names(datos)}."
+    ))
+  }
+
+  if (!is.numeric(datos[[nombre]])) {
+    cli::cli_abort(
+      "La columna {.field {nombre}} tiene que ser num\u00e9rica, no {.cls {class(datos[[nombre]])[1]}}."
+    )
+  }
+
   datos |>
     dplyr::group_by(id) |>
     dplyr::summarise(
-      media = mean({{ variable }}, na.rm = TRUE),
-      desvio = stats::sd({{ variable }}, na.rm = TRUE)
+      media = mean(.data[[nombre]], na.rm = TRUE),
+      desvio = stats::sd(.data[[nombre]], na.rm = TRUE)
     ) |>
     tidyr::pivot_longer(
       cols = c("media", "desvio"),

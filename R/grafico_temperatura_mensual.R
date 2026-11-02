@@ -22,6 +22,58 @@
 #'
 #' @export
 grafico_temperatura_mensual <- function(datos, colores, titulo = "Temperatura") {
+  if (!is.data.frame(datos)) {
+    cli::cli_abort(
+      "{.arg datos} tiene que ser un data frame o un tibble, no {.cls {class(datos)[1]}}."
+    )
+  }
+
+  faltantes <- setdiff(
+    c("id", "fecha", "temperatura_abrigo_150cm"),
+    names(datos)
+  )
+
+  if (length(faltantes) > 0) {
+    cli::cli_abort(c(
+      "{.arg datos} tiene que tener las columnas {.field id}, {.field fecha} y {.field temperatura_abrigo_150cm}.",
+      "x" = "No encontr\u00e9: {.field {faltantes}}."
+    ))
+  }
+
+  if (!inherits(datos$fecha, c("Date", "POSIXt"))) {
+    cli::cli_abort(
+      "La columna {.field fecha} tiene que ser de tipo fecha, no {.cls {class(datos$fecha)[1]}}."
+    )
+  }
+
+  if (!is.numeric(datos$temperatura_abrigo_150cm)) {
+    cli::cli_abort(
+      "La columna {.field temperatura_abrigo_150cm} tiene que ser num\u00e9rica, no {.cls {class(datos$temperatura_abrigo_150cm)[1]}}."
+    )
+  }
+
+  if (!is.character(colores)) {
+    cli::cli_abort(
+      "{.arg colores} tiene que ser un vector de colores en texto, por ejemplo {.val darkorange}."
+    )
+  }
+
+  ids_estaciones <- unique(datos$id)
+
+  if (length(colores) < length(ids_estaciones)) {
+    cli::cli_abort(c(
+      "Se necesita un color por estaci\u00f3n.",
+      "x" = "Estaciones: {length(ids_estaciones)}. Colores: {length(colores)}.",
+      "i" = "Agreg\u00e1 al menos {length(ids_estaciones) - length(colores)} m\u00e1s a {.arg colores}."
+    ))
+  }
+
+  if (!is.character(titulo) || length(titulo) != 1 || is.na(titulo)) {
+    cli::cli_abort(
+      "{.arg titulo} tiene que ser un solo texto, por ejemplo {.val Temperatura}."
+    )
+  }
+
   datos |>
     dplyr::group_by(id, mes = lubridate::month(fecha)) |>
     dplyr::summarise(

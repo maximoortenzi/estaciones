@@ -3,3 +3,4 @@
 export(datos_estacion)
 export(grafico_temperatura_mensual)
 export(tabla_resumen_temperatura)
+importFrom(rlang,.data)
