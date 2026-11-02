@@ -13,8 +13,10 @@
 #'
 #' @noRd
 descarga_estacion <- function(id, ruta_archivo) {
-  file <- here::here(ruta_archivo)
-  dir.create(dirname(file), recursive = TRUE, showWarnings = FALSE)
+  carpeta <- dirname(ruta_archivo)
+  if (!dir.exists(carpeta)) {
+    dir.create(carpeta, recursive = TRUE)
+  }
 
   url <- paste0(
     "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/",
@@ -22,12 +24,12 @@ descarga_estacion <- function(id, ruta_archivo) {
   )
 
   estado <- suppressWarnings(tryCatch(
-    utils::download.file(url, file, quiet = TRUE),
+    utils::download.file(url, ruta_archivo, quiet = TRUE),
     error = function(e) NA_integer_
   ))
 
   if (is.na(estado) || estado != 0) {
-    unlink(file)
+    unlink(ruta_archivo)
     cli::cli_abort(c(
       "No se pudo descargar la estaci\u00f3n {.val {id}}.",
       "i" = "Revis\u00e1 que el c\u00f3digo exista y que haya conexi\u00f3n a internet.",
@@ -35,7 +37,7 @@ descarga_estacion <- function(id, ruta_archivo) {
     ))
   }
 
-  invisible(file)
+  invisible(ruta_archivo)
 }
 
 #' Descarga y lee los datos de una estacion
@@ -75,13 +77,11 @@ datos_estacion <- function(id, ruta_archivo) {
     )
   }
 
-  file <- here::here(ruta_archivo)
-
-  if (!file.exists(file)) {
+  if (!file.exists(ruta_archivo)) {
     descarga_estacion(id, ruta_archivo)
     cli::cli_inform(c("v" = "Se descarg\u00f3 la estaci\u00f3n {id} en {ruta_archivo}"))
   }
 
   cli::cli_inform(c("v" = "Leyendo los datos"))
-  readr::read_csv(file, show_col_types = FALSE)
+  readr::read_csv(ruta_archivo, show_col_types = FALSE)
 }
