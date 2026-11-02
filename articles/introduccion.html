@@ -35448,7 +35448,8 @@ de funcionamiento de las 258 estaciones disponibles.</li>
 </h2>
 <p><code><a href="../reference/datos_estacion.html">datos_estacion()</a></code> recibe el identificador de la estación
 y la ruta donde se guarda el archivo. Si el archivo todavía no existe lo
-descarga, y después lo lee como un <code>tibble</code>.</p>
+descarga, y después lo lee como un <code>tibble</code>. Si la carpeta de
+destino no existe, la crea.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">estacion_NH0437</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/datos_estacion.html">datos_estacion</a></span><span class="op">(</span><span class="st">"NH0437"</span>, <span class="st">"datos/NH0437.csv"</span><span class="op">)</span></span>
 <span><span class="va">estacion_NH0437</span></span></code></pre></div>

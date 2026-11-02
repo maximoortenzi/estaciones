@@ -20,7 +20,7 @@ datos_estacion(id, ruta_archivo)
 - ruta_archivo:
 
   Ruta donde se guarda (o donde ya esta) el archivo, por ejemplo
-  `"datos/NH0437.csv"`.
+  `"datos/NH0437.csv"`. Si la carpeta no existe, se crea.
 
 ## Value
 

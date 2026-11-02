@@ -20,8 +20,9 @@ tabla_resumen_temperatura(datos, variable)
 
 - variable:
 
-  La variable de temperatura que se quiere resumir, sin comillas. Por
-  ejemplo `temperatura_abrigo_150cm`.
+  La variable de temperatura que se quiere resumir. Se puede pasar sin
+  comillas, por ejemplo `temperatura_abrigo_150cm`, o como texto, por
+  ejemplo `"temperatura_abrigo_150cm"`.
 
 ## Value
 

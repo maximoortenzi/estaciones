@@ -35384,7 +35384,7 @@ metadatos
 [`datos_estacion()`](https://maximoortenzi.github.io/estaciones/reference/datos_estacion.md)
 recibe el identificador de la estación y la ruta donde se guarda el
 archivo. Si el archivo todavía no existe lo descarga, y después lo lee
-como un `tibble`.
+como un `tibble`. Si la carpeta de destino no existe, la crea.
 
 ``` r
 
