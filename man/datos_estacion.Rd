@@ -10,7 +10,7 @@ datos_estacion(id, ruta_archivo)
 \item{id}{Codigo de la estacion, por ejemplo \code{"NH0437"}.}
 
 \item{ruta_archivo}{Ruta donde se guarda (o donde ya esta) el archivo, por
-ejemplo \code{"datos/NH0437.csv"}.}
+ejemplo \code{"datos/NH0437.csv"}. Si la carpeta no existe, se crea.}
 }
 \value{
 Un \code{tibble} con una fila por fecha y una columna por variable
