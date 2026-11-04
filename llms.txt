@@ -43,7 +43,7 @@ temperatura de cada estación:
 
 library(estaciones)
 
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
+tabla_resumen_temperatura(estaciones)
 #> # A tibble: 2 × 6
 #>   variable NH0046 NH0098 NH0437 NH0472 NH0910
 #>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
@@ -88,7 +88,7 @@ Al contribuir con este proyecto aceptás respetar sus términos.
 - [`estaciones`](https://maximoortenzi.github.io/estaciones/reference/estaciones.md)
   : Datos meteorologicos de cinco estaciones de Santa Fe
 - [`grafico_temperatura_mensual()`](https://maximoortenzi.github.io/estaciones/reference/grafico_temperatura_mensual.md)
-  : Grafico de temperatura mensual
+  : Gráfico de temperatura mensual
 - [`metadatos`](https://maximoortenzi.github.io/estaciones/reference/metadatos.md)
   : Metadatos de las estaciones meteorologicas
 - [`tabla_resumen_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/tabla_resumen_temperatura.md)

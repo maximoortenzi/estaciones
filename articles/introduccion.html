@@ -35468,19 +35468,20 @@ las cinco estaciones juntas podés combinar las descargas:</p>
 <h2 id="resumen-de-temperatura">Resumen de temperatura<a class="anchor" aria-label="anchor" href="#resumen-de-temperatura"></a>
 </h2>
 <p><code><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura()</a></code> calcula la media y el desvío
-estándar de una variable de temperatura para cada estación. La variable
-se pasa <strong>sin comillas</strong>.</p>
+estándar de una variable de temperatura para cada estación. Si no le
+decís qué variable usar, resume la temperatura de abrigo a 150 cm:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura</a></span><span class="op">(</span><span class="va">estaciones</span>, <span class="va">temperatura_abrigo_150cm</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura</a></span><span class="op">(</span><span class="va">estaciones</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
 <span><span class="co">#&gt;   variable NH0046 NH0098 NH0437 NH0472 NH0910</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> media     17.3   18.6   20.2   18.0   17.7 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> desvio     5.90   5.98   5.77   5.94   6.12</span></span></code></pre></div>
 <p>Como la variable es un argumento, la misma función sirve para
-cualquier otra columna de temperatura:</p>
+cualquier otra columna de temperatura. El nombre de la columna se pasa
+<strong>entre comillas</strong>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura</a></span><span class="op">(</span><span class="va">estaciones</span>, <span class="va">temperatura_abrigo_150cm_minima</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura</a></span><span class="op">(</span><span class="va">estaciones</span>, <span class="st">"temperatura_abrigo_150cm_minima"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
 <span><span class="co">#&gt;   variable NH0046 NH0098 NH0437 NH0472 NH0910</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>

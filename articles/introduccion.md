@@ -35410,11 +35410,12 @@ santa_fe <- purrr::map_df(
 
 [`tabla_resumen_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/tabla_resumen_temperatura.md)
 calcula la media y el desvío estándar de una variable de temperatura
-para cada estación. La variable se pasa **sin comillas**.
+para cada estación. Si no le decís qué variable usar, resume la
+temperatura de abrigo a 150 cm:
 
 ``` r
 
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
+tabla_resumen_temperatura(estaciones)
 #> # A tibble: 2 × 6
 #>   variable NH0046 NH0098 NH0437 NH0472 NH0910
 #>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
@@ -35423,11 +35424,12 @@ tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
 ```
 
 Como la variable es un argumento, la misma función sirve para cualquier
-otra columna de temperatura:
+otra columna de temperatura. El nombre de la columna se pasa **entre
+comillas**:
 
 ``` r
 
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
+tabla_resumen_temperatura(estaciones, "temperatura_abrigo_150cm_minima")
 #> # A tibble: 2 × 6
 #>   variable NH0046 NH0098 NH0437 NH0472 NH0910
 #>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>

@@ -43,7 +43,7 @@ temperatura de cada estación:
 
 library(estaciones)
 
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
+tabla_resumen_temperatura(estaciones)
 #> # A tibble: 2 × 6
 #>   variable NH0046 NH0098 NH0437 NH0472 NH0910
 #>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
