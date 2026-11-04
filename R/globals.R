@@ -6,6 +6,7 @@ utils::globalVariables(
     "id",
     "fecha",
     "mes",
+    "anio",
     "media",
     "desvio",
     "valor",
