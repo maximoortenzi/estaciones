@@ -3,7 +3,7 @@
 ## All functions
 
 - [`datos_estacion()`](https://maximoortenzi.github.io/estaciones/reference/datos_estacion.md)
-  : Descarga y lee los datos de una estacion
+  : Descarga y lee los datos de una estación
 - [`estaciones`](https://maximoortenzi.github.io/estaciones/reference/estaciones.md)
   : Datos meteorologicos de cinco estaciones de Santa Fe
 - [`grafico_temperatura_mensual()`](https://maximoortenzi.github.io/estaciones/reference/grafico_temperatura_mensual.md)
