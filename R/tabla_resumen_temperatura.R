@@ -7,9 +7,10 @@
 #' @param datos Un `data.frame` o `tibble` con los datos de una o más
 #'   estaciones. Tiene que tener la columna `id` y la variable que se quiere
 #'   resumir.
-#' @param variable Nombre de la variable de temperatura que se quiere resumir,
-#'   escrito como texto (entre comillas). Por defecto es
-#'   `"temperatura_abrigo_150cm"`.
+#' @param variable Nombre de la variable de temperatura que se quiere resumir.
+#'   Se puede pasar sin comillas (`temperatura_abrigo_150cm`) o como texto
+#'   (`"temperatura_abrigo_150cm"`). Por defecto es
+#'   `temperatura_abrigo_150cm`.
 #'
 #' @return Un `tibble` con dos filas (`media` y `desvio`) y una columna por
 #'   estación.
@@ -17,11 +18,22 @@
 #' @examples
 #' tabla_resumen_temperatura(estaciones)
 #'
+#' tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
+#'
+#' # También se puede pasar como texto
 #' tabla_resumen_temperatura(estaciones, "temperatura_abrigo_150cm_minima")
 #'
 #' @importFrom rlang .data
 #' @export
 tabla_resumen_temperatura <- function(datos, variable = "temperatura_abrigo_150cm") {
+  variable <- rlang::enquo(variable)
+
+  if (rlang::quo_is_symbol(variable)) {
+    variable <- rlang::as_name(variable)
+  } else {
+    variable <- rlang::eval_tidy(variable)
+  }
+
   if (!is.data.frame(datos)) {
     cli::cli_abort(c(
       "datos tiene que ser un data frame o un tibble.",
@@ -37,9 +49,12 @@ tabla_resumen_temperatura <- function(datos, variable = "temperatura_abrigo_150c
     cli::cli_abort("datos tiene que tener una columna id.")
   }
 
-  if (!is.character(variable) || length(variable) != 1) {
+  if (
+    !is.character(variable) || length(variable) != 1 ||
+      is.na(variable) || !nzchar(variable)
+  ) {
     cli::cli_abort(c(
-      "variable tiene que ser el nombre de una columna escrito entre comillas, por ejemplo \"temperatura_abrigo_150cm\".",
+      "variable tiene que ser el nombre de una columna, por ejemplo temperatura_abrigo_150cm o \"temperatura_abrigo_150cm\".",
       "i" = "Recib\u00ed un {class(variable)[1]} de largo {length(variable)}."
     ))
   }

@@ -11,9 +11,10 @@ tabla_resumen_temperatura(datos, variable = "temperatura_abrigo_150cm")
 estaciones. Tiene que tener la columna \code{id} y la variable que se quiere
 resumir.}
 
-\item{variable}{Nombre de la variable de temperatura que se quiere resumir,
-escrito como texto (entre comillas). Por defecto es
-\code{"temperatura_abrigo_150cm"}.}
+\item{variable}{Nombre de la variable de temperatura que se quiere resumir.
+Se puede pasar sin comillas (\code{temperatura_abrigo_150cm}) o como texto
+(\code{"temperatura_abrigo_150cm"}). Por defecto es
+\code{temperatura_abrigo_150cm}.}
 }
 \value{
 Un \code{tibble} con dos filas (\code{media} y \code{desvio}) y una columna por
@@ -27,6 +28,9 @@ columna por estación. Sirve tanto para una como para varias estaciones.
 \examples{
 tabla_resumen_temperatura(estaciones)
 
+tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
+
+# También se puede pasar como texto
 tabla_resumen_temperatura(estaciones, "temperatura_abrigo_150cm_minima")
 
 }

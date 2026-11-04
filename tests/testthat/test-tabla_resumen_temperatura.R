@@ -49,6 +49,19 @@ test_that("resume otra variable si se la pasa como texto", {
   expect_true(all(minima[1, -1] < media[1, -1]))
 })
 
+test_that("resume otra variable si se la pasa sin comillas", {
+  sin_comillas <- tabla_resumen_temperatura(
+    estaciones,
+    temperatura_abrigo_150cm_minima
+  )
+  con_comillas <- tabla_resumen_temperatura(
+    estaciones,
+    "temperatura_abrigo_150cm_minima"
+  )
+
+  expect_equal(sin_comillas, con_comillas)
+})
+
 test_that("avisa si datos no es un data frame", {
   mensaje <- "datos tiene que ser un data frame"
 
@@ -80,11 +93,17 @@ test_that("avisa si la variable no es un solo texto", {
     tabla_resumen_temperatura(estaciones, c("fecha", "id")),
     mensaje
   )
+  expect_error(tabla_resumen_temperatura(estaciones, ""), mensaje)
+  expect_error(tabla_resumen_temperatura(estaciones, NA_character_), mensaje)
 })
 
 test_that("avisa si la variable no existe en los datos", {
   expect_error(
     tabla_resumen_temperatura(estaciones, "temperatura_que_no_existe"),
+    "No existe la columna temperatura_que_no_existe"
+  )
+  expect_error(
+    tabla_resumen_temperatura(estaciones, temperatura_que_no_existe),
     "No existe la columna temperatura_que_no_existe"
   )
 })
