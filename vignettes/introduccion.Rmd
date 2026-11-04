@@ -82,18 +82,18 @@ santa_fe <- purrr::map_df(
 ## Resumen de temperatura
 
 `tabla_resumen_temperatura()` calcula la media y el desvío estándar de una
-variable de temperatura para cada estación. La variable se pasa **sin
-comillas**.
+variable de temperatura para cada estación. Si no le decís qué variable usar,
+resume la temperatura de abrigo a 150 cm:
 
 ```{r}
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
+tabla_resumen_temperatura(estaciones)
 ```
 
 Como la variable es un argumento, la misma función sirve para cualquier otra
-columna de temperatura:
+columna de temperatura. El nombre de la columna se pasa **entre comillas**:
 
 ```{r}
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
+tabla_resumen_temperatura(estaciones, "temperatura_abrigo_150cm_minima")
 ```
 
 ## Gráfico de temperatura mensual

@@ -4,29 +4,29 @@
 \alias{tabla_resumen_temperatura}
 \title{Tabla resumen de temperatura}
 \usage{
-tabla_resumen_temperatura(datos, variable)
+tabla_resumen_temperatura(datos, variable = "temperatura_abrigo_150cm")
 }
 \arguments{
-\item{datos}{Un \code{data.frame} o \code{tibble} con los datos de una o mas
+\item{datos}{Un \code{data.frame} o \code{tibble} con los datos de una o más
 estaciones. Tiene que tener la columna \code{id} y la variable que se quiere
 resumir.}
 
-\item{variable}{La variable de temperatura que se quiere resumir. Se puede
-pasar sin comillas, por ejemplo \code{temperatura_abrigo_150cm}, o como texto,
-por ejemplo \code{"temperatura_abrigo_150cm"}.}
+\item{variable}{Nombre de la variable de temperatura que se quiere resumir,
+escrito como texto (entre comillas). Por defecto es
+\code{"temperatura_abrigo_150cm"}.}
 }
 \value{
 Un \code{tibble} con dos filas (\code{media} y \code{desvio}) y una columna por
-estacion.
+estación.
 }
 \description{
-Calcula la media y el desvio estandar de una variable de temperatura para
-cada estacion y devuelve una tabla con una fila por estadistico y una
-columna por estacion. Sirve tanto para una como para varias estaciones.
+Calcula la media y el desvío estándar de una variable de temperatura para
+cada estación y devuelve una tabla con una fila por estadístico y una
+columna por estación. Sirve tanto para una como para varias estaciones.
 }
 \examples{
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
+tabla_resumen_temperatura(estaciones)
 
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
+tabla_resumen_temperatura(estaciones, "temperatura_abrigo_150cm_minima")
 
 }
