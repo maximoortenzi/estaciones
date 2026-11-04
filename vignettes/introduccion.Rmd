@@ -27,9 +27,16 @@ Las Rosas (`NH0910`), Zavalla (`NH0046`), Rafaela (`NH0098`) y Reconquista
 
 Con el paquete podés:
 
-- descargar los datos de cualquier estación a partir de su identificador,
-- calcular la media y el desvío estándar de una variable de temperatura,
-- graficar el ciclo anual de temperatura de una o más estaciones.
+- descargar los datos de una estación a partir de su identificador, con
+  `datos_estacion()`;
+- calcular la media y el desvío estándar de una variable de temperatura, con
+  `tabla_resumen_temperatura()`;
+- calcular el promedio anual de temperatura, con
+  `promedio_anual_temperatura()`;
+- calcular la precipitación acumulada de cada mes, con
+  `precipitacion_acumulada_mensual()`;
+- graficar el ciclo anual de temperatura de una o más estaciones, con
+  `grafico_temperatura_mensual()`.
 
 ## Instalación
 
@@ -45,7 +52,7 @@ El paquete trae dos conjuntos de datos listos para usar:
 - `estaciones`: las observaciones diarias de las cinco estaciones, con 35
   variables meteorológicas.
 - `metadatos`: la ubicación, las coordenadas y el período de funcionamiento de
-  las 258 estaciones disponibles.
+  258 estaciones del INTA.
 
 ```{r}
 estaciones
@@ -55,6 +62,9 @@ estaciones
 metadatos
 ```
 
+El código que generó estos datos está en la carpeta `data-raw` del
+repositorio.
+
 ## Descargar los datos de una estación
 
 `datos_estacion()` recibe el identificador de la estación y la ruta donde se
@@ -62,21 +72,37 @@ guarda el archivo. Si el archivo todavía no existe lo descarga, y después lo
 lee como un `tibble`. Si la carpeta de destino no existe, la crea.
 
 ```{r, eval = FALSE}
-estacion_NH0437 <- datos_estacion("NH0437", "datos/NH0437.csv")
-estacion_NH0437
+reconquista <- datos_estacion("NH0437", "datos/NH0437.csv")
+reconquista
 ```
 
 El archivo queda guardado en disco, así que la próxima vez que llames a la
-función no lo vuelve a descargar: solo lo lee. Para trabajar con las cinco
-estaciones juntas podés combinar las descargas:
+función no lo vuelve a descargar: solo lo lee.
+
+Para trabajar con varias estaciones juntas, descargá cada una y uní las tablas
+una debajo de la otra con `rbind()`. Así se armaron los datos `estaciones`:
 
 ```{r, eval = FALSE}
-ids <- c("NH0472", "NH0910", "NH0046", "NH0098", "NH0437")
+oliveros <- datos_estacion("NH0472", "datos/NH0472.csv")
+las_rosas <- datos_estacion("NH0910", "datos/NH0910.csv")
 
-santa_fe <- purrr::map_df(
-  ids,
-  ~ datos_estacion(.x, paste0("datos/", .x, ".csv"))
-)
+dos_estaciones <- rbind(oliveros, las_rosas)
+```
+
+## Sumar la ubicación de cada estación
+
+Los datos diarios no dicen dónde está cada estación. Esa información está en
+`metadatos`, y las dos tablas tienen en común la columna `id`. Con
+`left_join()` le sumamos a cada observación los datos de su estación. Usamos
+`left_join()` porque queremos conservar todas las observaciones de
+`estaciones`, y de `metadatos` solo nos interesan las cinco estaciones que
+aparecen en los datos:
+
+```{r}
+estaciones_con_ubicacion <- dplyr::left_join(estaciones, metadatos, by = "id")
+
+estaciones_con_ubicacion |>
+  dplyr::select(id, nombre, localidad, altura, fecha, temperatura_abrigo_150cm)
 ```
 
 ## Resumen de temperatura
@@ -96,6 +122,44 @@ columna de temperatura. El nombre de la columna se pasa **entre comillas**:
 tabla_resumen_temperatura(estaciones, "temperatura_abrigo_150cm_minima")
 ```
 
+## Promedio anual de temperatura
+
+`promedio_anual_temperatura()` calcula el promedio de la temperatura de abrigo
+a 150 cm para cada estación y cada año:
+
+```{r}
+promedio_anual <- promedio_anual_temperatura(estaciones)
+promedio_anual
+```
+
+Con el resultado podemos ver si la temperatura media se mantiene constante con
+el tiempo o cambia. Sumamos una regresión lineal con `geom_smooth()`:
+
+```{r, fig.width = 7, fig.height = 4}
+library(ggplot2)
+
+promedio_anual |>
+  dplyr::filter(id == "NH0437") |>
+  ggplot(aes(anio, temperatura_media)) +
+  geom_line() +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Temperatura media anual en Reconquista",
+    x = "Año",
+    y = "Temperatura media"
+  )
+```
+
+## Precipitación acumulada mensual
+
+`precipitacion_acumulada_mensual()` suma la precipitación de cada mes en cada
+estación. También cuenta cuántos días del mes tienen dato, para no confundir un
+mes sin datos (que suma 0) con un mes sin lluvia:
+
+```{r}
+precipitacion_acumulada_mensual(estaciones)
+```
+
 ## Gráfico de temperatura mensual
 
 `grafico_temperatura_mensual()` calcula el promedio mensual de la temperatura
@@ -108,6 +172,13 @@ grafico_temperatura_mensual(
   colores = c("darkorange", "purple", "cyan4", "steelblue", "pink3"),
   titulo = "Ciclo anual de temperatura"
 )
+```
+
+Si no le pasás colores, o le pasás menos colores que estaciones, los elige al
+azar con `colors()` y te avisa:
+
+```{r, fig.width = 7, fig.height = 4}
+grafico_temperatura_mensual(estaciones)
 ```
 
 Si querés graficar una sola estación, filtrá los datos antes de pasarle la
