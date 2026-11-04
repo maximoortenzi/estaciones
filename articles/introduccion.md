@@ -14,10 +14,17 @@ y Reconquista (`NH0437`).
 
 Con el paquete podés:
 
-- descargar los datos de cualquier estación a partir de su
-  identificador,
+- descargar los datos de una estación a partir de su identificador, con
+  [`datos_estacion()`](https://maximoortenzi.github.io/estaciones/reference/datos_estacion.md);
 - calcular la media y el desvío estándar de una variable de temperatura,
-- graficar el ciclo anual de temperatura de una o más estaciones.
+  con
+  [`tabla_resumen_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/tabla_resumen_temperatura.md);
+- calcular el promedio anual de temperatura, con
+  [`promedio_anual_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/promedio_anual_temperatura.md);
+- calcular la precipitación acumulada de cada mes, con
+  [`precipitacion_acumulada_mensual()`](https://maximoortenzi.github.io/estaciones/reference/precipitacion_acumulada_mensual.md);
+- graficar el ciclo anual de temperatura de una o más estaciones, con
+  [`grafico_temperatura_mensual()`](https://maximoortenzi.github.io/estaciones/reference/grafico_temperatura_mensual.md).
 
 ## Instalación
 
@@ -34,7 +41,7 @@ El paquete trae dos conjuntos de datos listos para usar:
 - `estaciones`: las observaciones diarias de las cinco estaciones, con
   35 variables meteorológicas.
 - `metadatos`: la ubicación, las coordenadas y el período de
-  funcionamiento de las 258 estaciones disponibles.
+  funcionamiento de 258 estaciones del INTA.
 
 ``` r
 
@@ -35379,6 +35386,9 @@ metadatos
 #> 258 2022-03-08T00:00:00Z[UTC] 2024-07-12T00:00:00Z[UTC]
 ```
 
+El código que generó estos datos está en la carpeta `data-raw` del
+repositorio.
+
 ## Descargar los datos de una estación
 
 [`datos_estacion()`](https://maximoortenzi.github.io/estaciones/reference/datos_estacion.md)
@@ -35388,22 +35398,56 @@ como un `tibble`. Si la carpeta de destino no existe, la crea.
 
 ``` r
 
-estacion_NH0437 <- datos_estacion("NH0437", "datos/NH0437.csv")
-estacion_NH0437
+reconquista <- datos_estacion("NH0437", "datos/NH0437.csv")
+reconquista
 ```
 
 El archivo queda guardado en disco, así que la próxima vez que llames a
-la función no lo vuelve a descargar: solo lo lee. Para trabajar con las
-cinco estaciones juntas podés combinar las descargas:
+la función no lo vuelve a descargar: solo lo lee.
+
+Para trabajar con varias estaciones juntas, descargá cada una y uní las
+tablas una debajo de la otra con
+[`rbind()`](https://rdrr.io/r/base/cbind.html). Así se armaron los datos
+`estaciones`:
 
 ``` r
 
-ids <- c("NH0472", "NH0910", "NH0046", "NH0098", "NH0437")
+oliveros <- datos_estacion("NH0472", "datos/NH0472.csv")
+las_rosas <- datos_estacion("NH0910", "datos/NH0910.csv")
 
-santa_fe <- purrr::map_df(
-  ids,
-  ~ datos_estacion(.x, paste0("datos/", .x, ".csv"))
-)
+dos_estaciones <- rbind(oliveros, las_rosas)
+```
+
+## Sumar la ubicación de cada estación
+
+Los datos diarios no dicen dónde está cada estación. Esa información
+está en `metadatos`, y las dos tablas tienen en común la columna `id`.
+Con `left_join()` le sumamos a cada observación los datos de su
+estación. Usamos `left_join()` porque queremos conservar todas las
+observaciones de `estaciones`, y de `metadatos` solo nos interesan las
+cinco estaciones que aparecen en los datos:
+
+``` r
+
+estaciones_con_ubicacion <- dplyr::left_join(estaciones, metadatos, by = "id")
+
+estaciones_con_ubicacion |>
+  dplyr::select(id, nombre, localidad, altura, fecha, temperatura_abrigo_150cm)
+#> # A tibble: 95,681 × 6
+#>    id     nombre              localidad altura fecha      temperatura_abrigo_1…¹
+#>    <chr>  <chr>               <chr>      <dbl> <date>                      <dbl>
+#>  1 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-01                   11.1
+#>  2 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-02                    5.5
+#>  3 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-03                    6  
+#>  4 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-04                   NA  
+#>  5 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-05                   12.4
+#>  6 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-06                   11  
+#>  7 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-07                    7  
+#>  8 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-08                    5.6
+#>  9 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-09                   NA  
+#> 10 NH0472 INTA - Oliveros (E… Iriondo       26 1961-07-10                    8.4
+#> # ℹ 95,671 more rows
+#> # ℹ abbreviated name: ¹​temperatura_abrigo_150cm
 ```
 
 ## Resumen de temperatura
@@ -35437,6 +35481,81 @@ tabla_resumen_temperatura(estaciones, "temperatura_abrigo_150cm_minima")
 #> 2 desvio     6.19   6.09   6.02   6.28   6.30
 ```
 
+## Promedio anual de temperatura
+
+[`promedio_anual_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/promedio_anual_temperatura.md)
+calcula el promedio de la temperatura de abrigo a 150 cm para cada
+estación y cada año:
+
+``` r
+
+promedio_anual <- promedio_anual_temperatura(estaciones)
+promedio_anual
+#> # A tibble: 272 × 3
+#>    id      anio temperatura_media
+#>    <chr>  <dbl>             <dbl>
+#>  1 NH0046  1973              16.5
+#>  2 NH0046  1974              16.8
+#>  3 NH0046  1975              16.8
+#>  4 NH0046  1976              16.3
+#>  5 NH0046  1977              17.1
+#>  6 NH0046  1978              16.6
+#>  7 NH0046  1979              16.7
+#>  8 NH0046  1980              17.3
+#>  9 NH0046  1981              17.3
+#> 10 NH0046  1982              17.3
+#> # ℹ 262 more rows
+```
+
+Con el resultado podemos ver si la temperatura media se mantiene
+constante con el tiempo o cambia. Sumamos una regresión lineal con
+[`geom_smooth()`](https://ggplot2.tidyverse.org/reference/geom_smooth.html):
+
+``` r
+
+library(ggplot2)
+
+promedio_anual |>
+  dplyr::filter(id == "NH0437") |>
+  ggplot(aes(anio, temperatura_media)) +
+  geom_line() +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Temperatura media anual en Reconquista",
+    x = "Año",
+    y = "Temperatura media"
+  )
+#> `geom_smooth()` using formula = 'y ~ x'
+```
+
+![](introduccion_files/figure-html/unnamed-chunk-11-1.png)
+
+## Precipitación acumulada mensual
+
+[`precipitacion_acumulada_mensual()`](https://maximoortenzi.github.io/estaciones/reference/precipitacion_acumulada_mensual.md)
+suma la precipitación de cada mes en cada estación. También cuenta
+cuántos días del mes tienen dato, para no confundir un mes sin datos
+(que suma 0) con un mes sin lluvia:
+
+``` r
+
+precipitacion_acumulada_mensual(estaciones)
+#> # A tibble: 3,151 × 4
+#>    id     mes        precipitacion_acumulada dias_con_dato
+#>    <chr>  <date>                       <dbl>         <int>
+#>  1 NH0046 1973-01-01                    90.4            31
+#>  2 NH0046 1973-02-01                   204.             28
+#>  3 NH0046 1973-03-01                   197.             31
+#>  4 NH0046 1973-04-01                    99.2            30
+#>  5 NH0046 1973-05-01                     4.4            31
+#>  6 NH0046 1973-06-01                   160              30
+#>  7 NH0046 1973-07-01                    68.6            31
+#>  8 NH0046 1973-08-01                     4              31
+#>  9 NH0046 1973-09-01                     9              30
+#> 10 NH0046 1973-10-01                   128.             31
+#> # ℹ 3,141 more rows
+```
+
 ## Gráfico de temperatura mensual
 
 [`grafico_temperatura_mensual()`](https://maximoortenzi.github.io/estaciones/reference/grafico_temperatura_mensual.md)
@@ -35453,7 +35572,19 @@ grafico_temperatura_mensual(
 )
 ```
 
-![](introduccion_files/figure-html/unnamed-chunk-9-1.png)
+![](introduccion_files/figure-html/unnamed-chunk-13-1.png)
+
+Si no le pasás colores, o le pasás menos colores que estaciones, los
+elige al azar con [`colors()`](https://rdrr.io/r/grDevices/colors.html)
+y te avisa:
+
+``` r
+
+grafico_temperatura_mensual(estaciones)
+#> ℹ No había un color por estación, así que se eligieron al azar.
+```
+
+![](introduccion_files/figure-html/unnamed-chunk-14-1.png)
 
 Si querés graficar una sola estación, filtrá los datos antes de pasarle
 la tabla:
@@ -35468,4 +35599,4 @@ estaciones |>
   )
 ```
 
-![](introduccion_files/figure-html/unnamed-chunk-10-1.png)
+![](introduccion_files/figure-html/unnamed-chunk-15-1.png)

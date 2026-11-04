@@ -2,8 +2,11 @@
 
 Descarga el archivo `CSV` de una estación meteorológica del INTA y lo
 lee como un `tibble`. Si el archivo ya existe en la ruta indicada no lo
-vuelve a descargar, solo lo lee. Sirve para cualquier estación: solo hay
-que pasarle su identificador.
+vuelve a descargar, solo lo lee. Sirve para cualquier estación que tenga
+su archivo en el repositorio del libro: solo hay que pasarle su
+identificador. Hoy el repositorio tiene las cinco estaciones de Santa Fe
+que trae el paquete en
+[estaciones](https://maximoortenzi.github.io/estaciones/reference/estaciones.md).
 
 ## Usage
 
@@ -30,32 +33,32 @@ meteorológica.
 ## Examples
 
 ``` r
-estacion_NH0437 <- datos_estacion("NH0437", "datos/NH0437.csv")
-#> ✔ Se descargó la estación NH0437 en datos/NH0437.csv
+# En tu proyecto usarías una ruta como "datos/NH0910.csv". Acá guardamos el
+# archivo en una carpeta temporal para no dejar archivos sueltos.
+ruta <- file.path(tempdir(), "NH0910.csv")
+
+las_rosas <- datos_estacion("NH0910", ruta)
+#> ✔ Se descargó la estación NH0910 en /tmp/RtmpkQ6HiE/NH0910.csv
 #> ✔ Leyendo los datos
-#> Warning: One or more parsing issues, call `problems()` on your data frame for details,
-#> e.g.:
-#>   dat <- vroom(...)
-#>   problems(dat)
-estacion_NH0437
-#> # A tibble: 18,929 × 35
+las_rosas
+#> # A tibble: 15,553 × 35
 #>    id     fecha      temperatura_abrigo_150cm temperatura_abrigo_150cm_maxima
 #>    <chr>  <date>                        <dbl>                           <dbl>
-#>  1 NH0437 1970-08-01                    23.3                             31.2
-#>  2 NH0437 1970-08-02                    26.6                             32.1
-#>  3 NH0437 1970-08-03                    17.4                             22.9
-#>  4 NH0437 1970-08-04                    11.0                             11.9
-#>  5 NH0437 1970-08-05                    11.1                             12.6
-#>  6 NH0437 1970-08-06                    13.6                             15.1
-#>  7 NH0437 1970-08-07                    10.8                             14.9
-#>  8 NH0437 1970-08-08                     7.75                            13.7
-#>  9 NH0437 1970-08-09                     8.2                             15.1
-#> 10 NH0437 1970-08-10                    10.2                             18.4
-#> # ℹ 18,919 more rows
+#>  1 NH0910 1975-01-01                     21                              31  
+#>  2 NH0910 1975-01-02                     21.2                            28.5
+#>  3 NH0910 1975-01-03                     24.2                            32.5
+#>  4 NH0910 1975-01-04                     23.5                            31  
+#>  5 NH0910 1975-01-05                     19                              22  
+#>  6 NH0910 1975-01-06                     22.2                            27.5
+#>  7 NH0910 1975-01-07                     24.2                            30  
+#>  8 NH0910 1975-01-08                     26.5                            33.5
+#>  9 NH0910 1975-01-09                     26.5                            35  
+#> 10 NH0910 1975-01-10                     19.2                            25  
+#> # ℹ 15,543 more rows
 #> # ℹ 31 more variables: temperatura_abrigo_150cm_minima <dbl>,
-#> #   temperatura_intemperie_5cm_minima <dbl>,
-#> #   temperatura_intemperie_50cm_minima <dbl>,
-#> #   temperatura_suelo_5cm_media <dbl>, temperatura_suelo_10cm_media <lgl>,
+#> #   temperatura_intemperie_5cm_minima <lgl>,
+#> #   temperatura_intemperie_50cm_minima <lgl>,
+#> #   temperatura_suelo_5cm_media <lgl>, temperatura_suelo_10cm_media <lgl>,
 #> #   temperatura_inte_5cm <lgl>, temperatura_intemperie_150cm_minima <lgl>,
-#> #   humedad_suelo <lgl>, precipitacion_pluviometrica <dbl>, granizo <dbl>, …
+#> #   humedad_suelo <lgl>, precipitacion_pluviometrica <dbl>, granizo <lgl>, …
 ```

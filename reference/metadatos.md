@@ -1,8 +1,9 @@
-# Metadatos de las estaciones meteorologicas
+# Metadatos de las estaciones meteorológicas
 
-Informacion de las 258 estaciones meteorologicas disponibles en el
-repositorio del libro: ubicacion, coordenadas, altura y periodo de
-funcionamiento de cada una.
+Información de 258 estaciones meteorológicas del INTA: ubicación,
+coordenadas, altura y período de funcionamiento de cada una. Sirve para
+sumarle a los datos diarios la ubicación de cada estación uniendo las
+tablas por la columna `id`.
 
 ## Usage
 
@@ -16,15 +17,15 @@ Un `tibble` con 258 filas y 11 variables:
 
 - id:
 
-  codigo de la estacion
+  código de la estación
 
 - nombre:
 
-  nombre de la estacion
+  nombre de la estación
 
 - tipo:
 
-  tipo de estacion
+  tipo de estación
 
 - localidad:
 
@@ -48,7 +49,7 @@ Un `tibble` con 258 filas y 11 variables:
 
 - ubicacion:
 
-  direccion de la estacion
+  dirección de la estación
 
 - desde:
 
@@ -60,7 +61,11 @@ Un `tibble` con 258 filas y 11 variables:
 
 ## Source
 
-<https://github.com/rse-r/intro-programacion/tree/main/datos>
+Instituto Nacional de Tecnología Agropecuaria (INTA), a través del
+Sistema de Información y Gestión Agrometeorológica
+([SIGA](https://siga.inta.gob.ar/)). El archivo se descargó del
+repositorio del libro:
+<https://github.com/rse-r/intro-programacion/blob/main/datos/metadatos_completos.csv>
 
 ## Examples
 
@@ -80,5 +85,17 @@ metadatos
 #>  9 A872825 Tornqui… Nimb… Tornquist Buenos A… -38.1 -62.2   280  Acc. Tor… 2010…
 #> 10 A872812 Sachayo… Nimb… Sachayoj  Santiago… -26.5 -61.8   197  -         2010…
 #> # ℹ 248 more rows
+#> # ℹ 1 more variable: hasta <chr>
+
+# Ubicación de las cinco estaciones de Santa Fe
+dplyr::filter(metadatos, id %in% unique(estaciones$id))
+#> # A tibble: 5 × 11
+#>   id     nombre     tipo  localidad provincia   lat   lon altura ubicacion desde
+#>   <chr>  <chr>      <chr> <chr>     <chr>     <dbl> <dbl>  <dbl> <chr>     <chr>
+#> 1 NH0472 INTA - Ol… Conv… Iriondo   Santa Fe  -32.6 -60.8     26 Ruta 11 … 1961…
+#> 2 NH0910 Las Rosas… Conv… Las Rosas Santa Fe  -32.5 -61.6      0 Establec… 1975…
+#> 3 NH0046 UNR - Zav… Conv… Puan      Santa Fe  -33.0 -60.9     50 xxxxxxxx… 1973…
+#> 4 NH0098 INTA - Ra… Conv… Vera      Santa Fe  -31.2 -61.6    100 Ruta 34 … 1956…
+#> 5 NH0437 INTA - Re… Conv… Reconqui… Santa Fe  -29.2 -59.7     42 Ruta 11 … 1970…
 #> # ℹ 1 more variable: hasta <chr>
 ```
