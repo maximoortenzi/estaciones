@@ -1,15 +1,17 @@
-# descarga_estacion()
-# Descarga el archivo CSV de una estación meteorológica desde el repositorio
-# del libro y lo guarda en la ruta indicada. Si la carpeta de destino no
-# existe, la crea. Es una función auxiliar de datos_estacion() y no se exporta.
-#
-# Argumentos:
-#   id: código de la estación, por ejemplo "NH0437".
-#   ruta_archivo: ruta donde se guarda el archivo, por ejemplo
-#     "datos/NH0437.csv".
-#
-# Resultado: deja el archivo guardado en ruta_archivo. Si la estación no existe
-# o no hay conexión, download.file() frena con un error y no guarda nada.
+#' Descarga el archivo de una estación
+#'
+#' Descarga el archivo `CSV` de una estación meteorológica desde el repositorio
+#' del libro y lo guarda en la ruta indicada. Es una función auxiliar de
+#' `datos_estacion()` y no se exporta. Si la carpeta de destino no existe, la
+#' crea.
+#'
+#' @param id Código de la estación, por ejemplo `"NH0437"`.
+#' @param ruta_archivo Ruta del archivo donde se guardan los datos, por ejemplo
+#'   `"datos/NH0437.csv"`.
+#'
+#' @return La ruta del archivo descargado, de forma invisible.
+#'
+#' @noRd
 descarga_estacion <- function(id, ruta_archivo) {
   carpeta <- dirname(ruta_archivo)
   if (!dir.exists(carpeta)) {
@@ -21,7 +23,21 @@ descarga_estacion <- function(id, ruta_archivo) {
     id, ".csv"
   )
 
-  utils::download.file(url, ruta_archivo, quiet = TRUE)
+  estado <- suppressWarnings(tryCatch(
+    utils::download.file(url, ruta_archivo, quiet = TRUE),
+    error = function(e) NA_integer_
+  ))
+
+  if (is.na(estado) || estado != 0) {
+    unlink(ruta_archivo)
+    cli::cli_abort(c(
+      "No se pudo descargar la estaci\u00f3n {.val {id}}.",
+      "i" = "Revis\u00e1 que el c\u00f3digo exista y que haya conexi\u00f3n a internet.",
+      "x" = "La direcci\u00f3n que se intent\u00f3 fue {.url {url}}."
+    ))
+  }
+
+  invisible(ruta_archivo)
 }
 
 #' Descarga y lee los datos de una estación
