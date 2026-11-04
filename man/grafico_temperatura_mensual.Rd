@@ -2,26 +2,28 @@
 % Please edit documentation in R/grafico_temperatura_mensual.R
 \name{grafico_temperatura_mensual}
 \alias{grafico_temperatura_mensual}
-\title{Grafico de temperatura mensual}
+\title{Gráfico de temperatura mensual}
 \usage{
-grafico_temperatura_mensual(datos, colores, titulo = "Temperatura")
+grafico_temperatura_mensual(datos, colores = NULL, titulo = "Temperatura")
 }
 \arguments{
-\item{datos}{Un \code{data.frame} o \code{tibble} con los datos de una o mas
+\item{datos}{Un \code{data.frame} o \code{tibble} con los datos de una o más
 estaciones. Tiene que tener las columnas \code{id}, \code{fecha} y
 \code{temperatura_abrigo_150cm}.}
 
-\item{colores}{Vector de colores, uno por estacion. Por ejemplo
-\code{c("darkorange", "purple", "cyan4", "steelblue", "pink3")}.}
+\item{colores}{Vector de colores (texto), uno por estación. Por ejemplo
+\code{c("darkorange", "purple", "cyan4", "steelblue", "pink3")}. Es opcional:
+si no se pasa, o si tiene menos colores que estaciones, se eligen colores
+al azar con \code{colors()}.}
 
-\item{titulo}{Titulo del grafico. Por defecto es \code{"Temperatura"}.}
+\item{titulo}{Título del gráfico. Por defecto es \code{"Temperatura"}.}
 }
 \value{
 Un objeto \code{ggplot} con el ciclo anual de temperatura.
 }
 \description{
 Calcula el promedio mensual de la temperatura de abrigo a 150 cm de cada
-estacion y devuelve un grafico de lineas con una linea por estacion. Sirve
+estación y devuelve un gráfico de líneas con una línea por estación. Sirve
 tanto para una como para varias estaciones.
 }
 \examples{
@@ -30,5 +32,8 @@ grafico_temperatura_mensual(
   colores = c("darkorange", "purple", "cyan4", "steelblue", "pink3"),
   titulo = "Ciclo anual de temperatura"
 )
+
+# Sin colores: se eligen al azar
+grafico_temperatura_mensual(estaciones)
 
 }

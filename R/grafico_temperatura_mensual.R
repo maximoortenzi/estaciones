@@ -1,15 +1,17 @@
-#' Grafico de temperatura mensual
+#' Gráfico de temperatura mensual
 #'
 #' Calcula el promedio mensual de la temperatura de abrigo a 150 cm de cada
-#' estacion y devuelve un grafico de lineas con una linea por estacion. Sirve
+#' estación y devuelve un gráfico de líneas con una línea por estación. Sirve
 #' tanto para una como para varias estaciones.
 #'
-#' @param datos Un `data.frame` o `tibble` con los datos de una o mas
+#' @param datos Un `data.frame` o `tibble` con los datos de una o más
 #'   estaciones. Tiene que tener las columnas `id`, `fecha` y
 #'   `temperatura_abrigo_150cm`.
-#' @param colores Vector de colores, uno por estacion. Por ejemplo
-#'   `c("darkorange", "purple", "cyan4", "steelblue", "pink3")`.
-#' @param titulo Titulo del grafico. Por defecto es `"Temperatura"`.
+#' @param colores Vector de colores (texto), uno por estación. Por ejemplo
+#'   `c("darkorange", "purple", "cyan4", "steelblue", "pink3")`. Es opcional:
+#'   si no se pasa, o si tiene menos colores que estaciones, se eligen colores
+#'   al azar con `colors()`.
+#' @param titulo Título del gráfico. Por defecto es `"Temperatura"`.
 #'
 #' @return Un objeto `ggplot` con el ciclo anual de temperatura.
 #'
@@ -20,58 +22,63 @@
 #'   titulo = "Ciclo anual de temperatura"
 #' )
 #'
+#' # Sin colores: se eligen al azar
+#' grafico_temperatura_mensual(estaciones)
+#'
 #' @export
-grafico_temperatura_mensual <- function(datos, colores, titulo = "Temperatura") {
+grafico_temperatura_mensual <- function(datos, colores = NULL, titulo = "Temperatura") {
   if (!is.data.frame(datos)) {
-    cli::cli_abort(
-      "{.arg datos} tiene que ser un data frame o un tibble, no {.cls {class(datos)[1]}}."
-    )
+    cli::cli_abort(c(
+      "datos tiene que ser un data frame o un tibble.",
+      "i" = "Recib\u00ed un {class(datos)[1]}."
+    ))
   }
 
-  faltantes <- setdiff(
-    c("id", "fecha", "temperatura_abrigo_150cm"),
-    names(datos)
-  )
+  columnas <- c("id", "fecha", "temperatura_abrigo_150cm")
 
-  if (length(faltantes) > 0) {
+  if (!all(columnas %in% names(datos))) {
     cli::cli_abort(c(
-      "{.arg datos} tiene que tener las columnas {.field id}, {.field fecha} y {.field temperatura_abrigo_150cm}.",
-      "x" = "No encontr\u00e9: {.field {faltantes}}."
+      "datos tiene que tener las columnas id, fecha y temperatura_abrigo_150cm.",
+      "x" = "Faltan: {columnas[!columnas %in% names(datos)]}."
     ))
   }
 
   if (!inherits(datos$fecha, c("Date", "POSIXt"))) {
-    cli::cli_abort(
-      "La columna {.field fecha} tiene que ser de tipo fecha, no {.cls {class(datos$fecha)[1]}}."
-    )
+    cli::cli_abort(c(
+      "La columna fecha tiene que ser de tipo fecha.",
+      "i" = "Es de tipo {class(datos$fecha)[1]}."
+    ))
   }
 
   if (!is.numeric(datos$temperatura_abrigo_150cm)) {
-    cli::cli_abort(
-      "La columna {.field temperatura_abrigo_150cm} tiene que ser num\u00e9rica, no {.cls {class(datos$temperatura_abrigo_150cm)[1]}}."
-    )
-  }
-
-  if (!is.character(colores)) {
-    cli::cli_abort(
-      "{.arg colores} tiene que ser un vector de colores en texto, por ejemplo {.val darkorange}."
-    )
-  }
-
-  ids_estaciones <- unique(datos$id)
-
-  if (length(colores) < length(ids_estaciones)) {
     cli::cli_abort(c(
-      "Se necesita un color por estaci\u00f3n.",
-      "x" = "Estaciones: {length(ids_estaciones)}. Colores: {length(colores)}.",
-      "i" = "Agreg\u00e1 al menos {length(ids_estaciones) - length(colores)} m\u00e1s a {.arg colores}."
+      "La columna temperatura_abrigo_150cm tiene que ser num\u00e9rica.",
+      "i" = "Es de tipo {class(datos$temperatura_abrigo_150cm)[1]}."
+    ))
+  }
+
+  if (!is.null(colores) && !is.character(colores)) {
+    cli::cli_abort(c(
+      "colores tiene que ser un vector de colores en texto, por ejemplo \"darkorange\".",
+      "i" = "Recib\u00ed un {class(colores)[1]}."
     ))
   }
 
   if (!is.character(titulo) || length(titulo) != 1 || is.na(titulo)) {
-    cli::cli_abort(
-      "{.arg titulo} tiene que ser un solo texto, por ejemplo {.val Temperatura}."
-    )
+    cli::cli_abort(c(
+      "titulo tiene que ser un solo texto, por ejemplo \"Temperatura\".",
+      "i" = "Recib\u00ed un {class(titulo)[1]} de largo {length(titulo)}."
+    ))
+  }
+
+  cantidad_estaciones <- length(unique(datos$id))
+
+  # Si no hay un color por estacion, se eligen colores al azar
+  if (is.null(colores) || length(colores) < cantidad_estaciones) {
+    colores <- sample(grDevices::colors(), cantidad_estaciones)
+    cli::cli_inform(c(
+      "i" = "No hab\u00eda un color por estaci\u00f3n, as\u00ed que se eligieron al azar."
+    ))
   }
 
   datos |>
