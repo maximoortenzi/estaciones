@@ -10,5 +10,9 @@
   : Gráfico de temperatura mensual
 - [`metadatos`](https://maximoortenzi.github.io/estaciones/reference/metadatos.md)
   : Metadatos de las estaciones meteorologicas
+- [`precipitacion_acumulada_mensual()`](https://maximoortenzi.github.io/estaciones/reference/precipitacion_acumulada_mensual.md)
+  : Precipitación acumulada mensual
+- [`promedio_anual_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/promedio_anual_temperatura.md)
+  : Promedio anual de temperatura
 - [`tabla_resumen_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/tabla_resumen_temperatura.md)
   : Tabla resumen de temperatura
