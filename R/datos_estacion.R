@@ -28,8 +28,10 @@ descarga_estacion <- function(id, ruta_archivo) {
 #'
 #' Descarga el archivo `CSV` de una estación meteorológica del INTA y lo lee
 #' como un `tibble`. Si el archivo ya existe en la ruta indicada no lo vuelve a
-#' descargar, solo lo lee. Sirve para cualquier estación: solo hay que pasarle
-#' su identificador.
+#' descargar, solo lo lee. Sirve para cualquier estación que tenga su archivo
+#' en el repositorio del libro: solo hay que pasarle su identificador. Hoy el
+#' repositorio tiene las cinco estaciones de Santa Fe que trae el paquete en
+#' [estaciones].
 #'
 #' @param id Código de la estación, por ejemplo `"NH0437"`.
 #' @param ruta_archivo Ruta donde se guarda (o donde ya está) el archivo, por
@@ -39,8 +41,8 @@ descarga_estacion <- function(id, ruta_archivo) {
 #'   meteorológica.
 #'
 #' @examples
-#' estacion_NH0437 <- datos_estacion("NH0437", "datos/NH0437.csv")
-#' estacion_NH0437
+#' las_rosas <- datos_estacion("NH0910", "datos/NH0910.csv")
+#' las_rosas
 #'
 #' @export
 datos_estacion <- function(id, ruta_archivo) {
