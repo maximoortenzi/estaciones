@@ -34,6 +34,10 @@ precipitacion_acumulada_mensual <- function(datos) {
     ))
   }
 
+  if (nrow(datos) == 0) {
+    cli::cli_abort("datos no tiene filas para resumir.")
+  }
+
   columnas <- c("id", "fecha", "precipitacion_pluviometrica")
 
   if (!all(columnas %in% names(datos))) {
@@ -61,7 +65,9 @@ precipitacion_acumulada_mensual <- function(datos) {
     dplyr::group_by(id, mes = lubridate::floor_date(fecha, "month")) |>
     dplyr::summarise(
       precipitacion_acumulada = sum(precipitacion_pluviometrica, na.rm = TRUE),
-      dias_con_dato = sum(!is.na(precipitacion_pluviometrica)),
+      dias_con_dato = dplyr::n_distinct(
+        fecha[!is.na(precipitacion_pluviometrica)]
+      ),
       .groups = "drop"
     )
 }

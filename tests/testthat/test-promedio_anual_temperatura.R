@@ -33,6 +33,13 @@ test_that("funciona con los datos del paquete", {
   expect_equal(sort(unique(resultado$id)), sort(unique(estaciones$id)))
 })
 
+test_that("avisa si datos no tiene filas", {
+  expect_error(
+    promedio_anual_temperatura(estaciones[0, ]),
+    "datos no tiene filas"
+  )
+})
+
 test_that("avisa si datos no es un data frame", {
   expect_error(
     promedio_anual_temperatura(1:10),

@@ -30,6 +30,10 @@ promedio_anual_temperatura <- function(datos) {
     ))
   }
 
+  if (nrow(datos) == 0) {
+    cli::cli_abort("datos no tiene filas para resumir.")
+  }
+
   columnas <- c("id", "fecha", "temperatura_abrigo_150cm")
 
   if (!all(columnas %in% names(datos))) {

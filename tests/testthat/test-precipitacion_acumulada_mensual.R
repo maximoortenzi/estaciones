@@ -46,11 +46,31 @@ test_that("cuenta los dias con dato para no confundir faltantes con 0", {
   expect_equal(resultado$dias_con_dato, c(1, 0))
 })
 
+test_that("cuenta dias unicos y no filas repetidas", {
+  datos_prueba <- data.frame(
+    id = c("A", "A", "A"),
+    fecha = as.Date(c("2020-01-05", "2020-01-05", "2020-01-06")),
+    precipitacion_pluviometrica = c(10, 5, NA)
+  )
+
+  resultado <- precipitacion_acumulada_mensual(datos_prueba)
+
+  expect_equal(resultado$precipitacion_acumulada, 15)
+  expect_equal(resultado$dias_con_dato, 1)
+})
+
 test_that("funciona con los datos del paquete", {
   resultado <- precipitacion_acumulada_mensual(estaciones)
 
   expect_true(is.data.frame(resultado))
   expect_gte(min(resultado$precipitacion_acumulada), 0)
+})
+
+test_that("avisa si datos no tiene filas", {
+  expect_error(
+    precipitacion_acumulada_mensual(estaciones[0, ]),
+    "datos no tiene filas"
+  )
 })
 
 test_that("avisa si datos no es un data frame", {
