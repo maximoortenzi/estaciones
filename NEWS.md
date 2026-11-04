@@ -13,13 +13,17 @@ esa versión se sumó lo siguiente.
 
 ## Cambios
 
-* `tabla_resumen_temperatura()` recibe la variable como texto (entre comillas).
+* `tabla_resumen_temperatura()` recibe la variable sin comillas
+  (`temperatura_abrigo_150cm`) o como texto (`"temperatura_abrigo_150cm"`).
   Si no se la pasa, resume `temperatura_abrigo_150cm`.
 * `grafico_temperatura_mensual()` elige colores al azar con `colors()` si no
   se le pasan colores o si hay menos colores que estaciones.
-* `datos_estacion()` deja que `download.file()` frene con su propio error si
-  la estación no existe, y el ejemplo de la documentación ahora se ejecuta.
-* Los mensajes de error de todas las funciones son más simples y los tests
+* `datos_estacion()` avisa con un mensaje claro si la descarga falla, no deja
+  archivos incompletos y el ejemplo de la documentación se ejecuta.
+* `promedio_anual_temperatura()` y `precipitacion_acumulada_mensual()` avisan
+  si `datos` no tiene filas.
+* `precipitacion_acumulada_mensual()` cuenta días únicos con dato, no filas.
+* Las validaciones de todas las funciones usan `cli::cli_abort()` y los tests
   revisan el texto de cada mensaje.
 
 ## Documentación

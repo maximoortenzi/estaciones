@@ -116,7 +116,12 @@ tabla_resumen_temperatura(estaciones)
 ```
 
 Como la variable es un argumento, la misma función sirve para cualquier otra
-columna de temperatura. El nombre de la columna se pasa **entre comillas**:
+columna de temperatura. El nombre de la columna se pasa **sin comillas**, como
+en el libro, o **entre comillas**:
+
+```{r}
+tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
+```
 
 ```{r}
 tabla_resumen_temperatura(estaciones, "temperatura_abrigo_150cm_minima")
