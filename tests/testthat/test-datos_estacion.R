@@ -1,6 +1,4 @@
 test_that("datos_estacion descarga y lee los datos de una estacion", {
-  skip_if_offline()
-
   ruta <- file.path(tempfile("datos-estacion"), "NH0910.csv")
   on.exit(unlink(dirname(ruta), recursive = TRUE), add = TRUE)
 
@@ -16,8 +14,6 @@ test_that("datos_estacion descarga y lee los datos de una estacion", {
 })
 
 test_that("crea la carpeta de destino si no existe", {
-  skip_if_offline()
-
   ruta <- file.path(tempfile("carpeta"), "NH0910.csv")
   on.exit(unlink(dirname(ruta), recursive = TRUE), add = TRUE)
 
@@ -40,8 +36,6 @@ test_that("si el archivo ya existe lo lee sin descargarlo", {
 })
 
 test_that("frena con un mensaje claro si la estacion no existe", {
-  skip_if_offline()
-
   ruta <- file.path(tempfile("falla"), "XX0000.csv")
   on.exit(unlink(dirname(ruta), recursive = TRUE), add = TRUE)
 
