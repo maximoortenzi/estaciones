@@ -7,8 +7,9 @@ Authors@R:
 Description: Herramientas para descargar, leer, resumir y graficar los datos
     meteorologicos de las estaciones del INTA. Incluye funciones para obtener
     los datos de una estacion a partir de su identificador, calcular la media
-    y el desvio estandar de una variable de temperatura y representar el ciclo
-    anual de temperatura de una o mas estaciones.
+    y el desvio estandar de una variable de temperatura, el promedio anual de
+    temperatura y la precipitacion acumulada de cada mes, y representar el
+    ciclo anual de temperatura de una o mas estaciones.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

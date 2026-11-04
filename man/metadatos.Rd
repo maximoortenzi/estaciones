@@ -3,36 +3,44 @@
 \docType{data}
 \name{metadatos}
 \alias{metadatos}
-\title{Metadatos de las estaciones meteorologicas}
+\title{Metadatos de las estaciones meteorológicas}
 \format{
 Un \code{tibble} con 258 filas y 11 variables:
 \describe{
-\item{id}{codigo de la estacion}
-\item{nombre}{nombre de la estacion}
-\item{tipo}{tipo de estacion}
+\item{id}{código de la estación}
+\item{nombre}{nombre de la estación}
+\item{tipo}{tipo de estación}
 \item{localidad}{localidad donde se encuentra}
 \item{provincia}{provincia donde se encuentra}
 \item{lat}{latitud}
 \item{lon}{longitud}
 \item{altura}{altura sobre el nivel del mar (metros)}
-\item{ubicacion}{direccion de la estacion}
+\item{ubicacion}{dirección de la estación}
 \item{desde}{fecha desde la que hay registros}
 \item{hasta}{fecha hasta la que hay registros}
 }
 }
 \source{
-\url{https://github.com/rse-r/intro-programacion/tree/main/datos}
+Instituto Nacional de Tecnología Agropecuaria (INTA), a través del
+Sistema de Información y Gestión Agrometeorológica
+(\href{https://siga.inta.gob.ar/}{SIGA}). El archivo se descargó del
+repositorio del libro:
+\url{https://github.com/rse-r/intro-programacion/blob/main/datos/metadatos_completos.csv}
 }
 \usage{
 metadatos
 }
 \description{
-Informacion de las 258 estaciones meteorologicas disponibles en el
-repositorio del libro: ubicacion, coordenadas, altura y periodo de
-funcionamiento de cada una.
+Información de 258 estaciones meteorológicas del INTA: ubicación,
+coordenadas, altura y período de funcionamiento de cada una. Sirve para
+sumarle a los datos diarios la ubicación de cada estación uniendo las tablas
+por la columna \code{id}.
 }
 \examples{
 metadatos
+
+# Ubicación de las cinco estaciones de Santa Fe
+dplyr::filter(metadatos, id \%in\% unique(estaciones$id))
 
 }
 \keyword{datasets}

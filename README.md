@@ -14,17 +14,35 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/maximoortenzi/estaciones/graph/badge.svg)](https://app.codecov.io/gh/maximoortenzi/estaciones)
 <!-- badges: end -->
 
-El paquete `estaciones` reúne funciones para descargar, leer, resumir y
-graficar los datos meteorológicos de las estaciones del INTA.
+¡Hola! Te damos la bienvenida a `estaciones`, un paquete de R para
+descargar, leer, resumir y graficar los datos meteorológicos de las
+estaciones del INTA. Lo hicimos Máximo Ortenzi y Santiago Ramuchio.
 
 > **Este paquete es un trabajo práctico** de la materia *Introducción a
 > la Programación II*. Fue creado con fines educativos y no está pensado
 > para ser usado como un paquete de producción.
 
-Incluye los datos de cinco estaciones de la provincia de Santa Fe
-(Oliveros, Las Rosas, Zavalla, Rafaela y Reconquista) y los metadatos de
-las 258 estaciones disponibles en el repositorio del libro *Introducción
-a la Programación II*.
+## ¿Para quién es?
+
+Para cualquier persona que quiera practicar el análisis de datos
+meteorológicos en R, en especial quienes cursan la materia. No hace
+falta saber de meteorología: las funciones calculan resúmenes simples
+(promedios, desvíos, sumas) y gráficos a partir de las observaciones
+diarias que registra cada estación.
+
+## ¿Qué trae?
+
+Los datos diarios de cinco estaciones de la provincia de Santa Fe
+(Oliveros, Las Rosas, Zavalla, Rafaela y Reconquista) y la información
+de ubicación de 258 estaciones del INTA. Además, estas funciones:
+
+| Función | Qué hace |
+|----|----|
+| `datos_estacion()` | Descarga y lee los datos de una estación a partir de su identificador. |
+| `tabla_resumen_temperatura()` | Calcula la media y el desvío estándar de una variable de temperatura. |
+| `promedio_anual_temperatura()` | Calcula el promedio anual de temperatura de cada estación. |
+| `precipitacion_acumulada_mensual()` | Suma la precipitación de cada mes en cada estación. |
+| `grafico_temperatura_mensual()` | Grafica el ciclo anual de temperatura de una o más estaciones. |
 
 ## Instalación
 
@@ -60,6 +78,26 @@ tabla_resumen_temperatura(estaciones)
 #> 2 desvio     5.90   5.98   5.77   5.94   6.12
 ```
 
+El promedio de temperatura de cada año:
+
+``` r
+promedio_anual_temperatura(estaciones)
+#> # A tibble: 272 × 3
+#>    id      anio temperatura_media
+#>    <chr>  <dbl>             <dbl>
+#>  1 NH0046  1973              16.5
+#>  2 NH0046  1974              16.8
+#>  3 NH0046  1975              16.8
+#>  4 NH0046  1976              16.3
+#>  5 NH0046  1977              17.1
+#>  6 NH0046  1978              16.6
+#>  7 NH0046  1979              16.7
+#>  8 NH0046  1980              17.3
+#>  9 NH0046  1981              17.3
+#> 10 NH0046  1982              17.3
+#> # ℹ 262 more rows
+```
+
 Y graficar el ciclo anual de temperatura:
 
 ``` r
@@ -72,12 +110,33 @@ grafico_temperatura_mensual(
 
 <img src="man/figures/README-ejemplo-grafico-1.png" alt="" width="100%" />
 
+En la
+[viñeta](https://maximoortenzi.github.io/estaciones/articles/introduccion.html)
+hay más ejemplos de cada función.
+
+## Los datos
+
+Los datos son del Instituto Nacional de Tecnología Agropecuaria (INTA),
+que los publica a través del [SIGA](https://siga.inta.gob.ar/). Los
+descargamos del repositorio del libro *Introducción a la Programación
+II*, y el código que arma los datos del paquete está en la carpeta
+[`data-raw`](https://github.com/maximoortenzi/estaciones/tree/master/data-raw).
+
+La licencia MIT del paquete cubre el código, no los datos.
+
 ## Autores
 
 - Máximo Ortenzi
 - Santiago Ramuchio
 
 ## Cómo contribuir
+
+Nos sirve mucho cualquier tipo de ayuda:
+
+- avisarnos de un error abriendo un
+  [issue](https://github.com/maximoortenzi/estaciones/issues),
+- proponer una función nueva o una mejora,
+- corregir o mejorar la documentación.
 
 Para contribuir con este paquete podés leer la [guía de
 contribución](.github/CONTRIBUTING.md).

@@ -19,11 +19,17 @@ meteorológica.
 \description{
 Descarga el archivo \code{CSV} de una estación meteorológica del INTA y lo lee
 como un \code{tibble}. Si el archivo ya existe en la ruta indicada no lo vuelve a
-descargar, solo lo lee. Sirve para cualquier estación: solo hay que pasarle
-su identificador.
+descargar, solo lo lee. Sirve para cualquier estación que tenga su archivo
+en el repositorio del libro: solo hay que pasarle su identificador. Hoy el
+repositorio tiene las cinco estaciones de Santa Fe que trae el paquete en
+\link{estaciones}.
 }
 \examples{
-estacion_NH0437 <- datos_estacion("NH0437", "datos/NH0437.csv")
-estacion_NH0437
+# En tu proyecto usarías una ruta como "datos/NH0910.csv". Acá guardamos el
+# archivo en una carpeta temporal para no dejar archivos sueltos.
+ruta <- file.path(tempdir(), "NH0910.csv")
+
+las_rosas <- datos_estacion("NH0910", ruta)
+las_rosas
 
 }
