@@ -1,17 +1,15 @@
-#' Descarga el archivo de una estacion
-#'
-#' Descarga el archivo `CSV` de una estacion meteorologica desde el repositorio
-#' del libro y lo guarda en la ruta indicada. Es una funcion auxiliar de
-#' `datos_estacion()` y no se exporta. Si la carpeta de destino no existe, la
-#' crea.
-#'
-#' @param id Codigo de la estacion, por ejemplo `"NH0437"`.
-#' @param ruta_archivo Ruta del archivo donde se guardan los datos, por ejemplo
-#'   `"datos/NH0437.csv"`.
-#'
-#' @return La ruta del archivo descargado, de forma invisible.
-#'
-#' @noRd
+# descarga_estacion()
+# Descarga el archivo CSV de una estación meteorológica desde el repositorio
+# del libro y lo guarda en la ruta indicada. Si la carpeta de destino no
+# existe, la crea. Es una función auxiliar de datos_estacion() y no se exporta.
+#
+# Argumentos:
+#   id: código de la estación, por ejemplo "NH0437".
+#   ruta_archivo: ruta donde se guarda el archivo, por ejemplo
+#     "datos/NH0437.csv".
+#
+# Resultado: deja el archivo guardado en ruta_archivo. Si la estación no existe
+# o no hay conexión, download.file() frena con un error y no guarda nada.
 descarga_estacion <- function(id, ruta_archivo) {
   carpeta <- dirname(ruta_archivo)
   if (!dir.exists(carpeta)) {
@@ -23,58 +21,44 @@ descarga_estacion <- function(id, ruta_archivo) {
     id, ".csv"
   )
 
-  estado <- suppressWarnings(tryCatch(
-    utils::download.file(url, ruta_archivo, quiet = TRUE),
-    error = function(e) NA_integer_
-  ))
-
-  if (is.na(estado) || estado != 0) {
-    unlink(ruta_archivo)
-    cli::cli_abort(c(
-      "No se pudo descargar la estaci\u00f3n {.val {id}}.",
-      "i" = "Revis\u00e1 que el c\u00f3digo exista y que haya conexi\u00f3n a internet.",
-      "x" = "La direcci\u00f3n que se intent\u00f3 fue {.url {url}}."
-    ))
-  }
-
-  invisible(ruta_archivo)
+  utils::download.file(url, ruta_archivo, quiet = TRUE)
 }
 
-#' Descarga y lee los datos de una estacion
+#' Descarga y lee los datos de una estación
 #'
-#' Descarga el archivo `CSV` de una estacion meteorologica del INTA y lo lee
+#' Descarga el archivo `CSV` de una estación meteorológica del INTA y lo lee
 #' como un `tibble`. Si el archivo ya existe en la ruta indicada no lo vuelve a
-#' descargar, solo lo lee. Sirve para cualquier estacion: solo hay que pasarle
+#' descargar, solo lo lee. Sirve para cualquier estación: solo hay que pasarle
 #' su identificador.
 #'
-#' @param id Codigo de la estacion, por ejemplo `"NH0437"`.
-#' @param ruta_archivo Ruta donde se guarda (o donde ya esta) el archivo, por
+#' @param id Código de la estación, por ejemplo `"NH0437"`.
+#' @param ruta_archivo Ruta donde se guarda (o donde ya está) el archivo, por
 #'   ejemplo `"datos/NH0437.csv"`. Si la carpeta no existe, se crea.
 #'
 #' @return Un `tibble` con una fila por fecha y una columna por variable
-#'   meteorologica.
+#'   meteorológica.
 #'
 #' @examples
-#' \dontrun{
 #' estacion_NH0437 <- datos_estacion("NH0437", "datos/NH0437.csv")
 #' estacion_NH0437
-#' }
 #'
 #' @export
 datos_estacion <- function(id, ruta_archivo) {
-  if (!is.character(id) || length(id) != 1 || is.na(id) || !nzchar(id)) {
-    cli::cli_abort(
-      "{.arg id} tiene que ser el c\u00f3digo de una estaci\u00f3n, por ejemplo {.val NH0437}."
-    )
+  if (!is.character(id) || length(id) != 1 || is.na(id) || id == "") {
+    cli::cli_abort(c(
+      "id tiene que ser un solo texto con el c\u00f3digo de una estaci\u00f3n, por ejemplo \"NH0437\".",
+      "i" = "Recib\u00ed un {class(id)[1]} de largo {length(id)}."
+    ))
   }
 
   if (
     !is.character(ruta_archivo) || length(ruta_archivo) != 1 ||
-      is.na(ruta_archivo) || !nzchar(ruta_archivo)
+      is.na(ruta_archivo) || ruta_archivo == ""
   ) {
-    cli::cli_abort(
-      "{.arg ruta_archivo} tiene que ser la ruta de un archivo, por ejemplo {.val datos/NH0437.csv}."
-    )
+    cli::cli_abort(c(
+      "ruta_archivo tiene que ser un solo texto con la ruta del archivo, por ejemplo \"datos/NH0437.csv\".",
+      "i" = "Recib\u00ed un {class(ruta_archivo)[1]} de largo {length(ruta_archivo)}."
+    ))
   }
 
   if (!file.exists(ruta_archivo)) {

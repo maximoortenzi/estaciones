@@ -72,8 +72,8 @@ test_that("avisa con un mensaje claro si la descarga falla", {
   ruta <- tempfile(fileext = ".csv")
 
   expect_error(
-    suppressMessages(datos_estacion("XX0000", ruta)),
-    class = "rlang_error"
+    suppressWarnings(suppressMessages(datos_estacion("XX0000", ruta))),
+    "cannot open URL"
   )
   expect_false(file.exists(ruta))
 })
