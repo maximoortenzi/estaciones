@@ -10,3 +10,4 @@
 ^datos-test$
 ^datos$
 ^tests/testthat/datos-test$
+^data-raw$
