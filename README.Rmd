@@ -61,7 +61,7 @@ temperatura de cada estación:
 ```{r ejemplo-resumen}
 library(estaciones)
 
-tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm)
+tabla_resumen_temperatura(estaciones)
 ```
 
 Y graficar el ciclo anual de temperatura:
