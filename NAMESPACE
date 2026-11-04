@@ -2,6 +2,7 @@
 
 export(datos_estacion)
 export(grafico_temperatura_mensual)
+export(precipitacion_acumulada_mensual)
 export(promedio_anual_temperatura)
 export(tabla_resumen_temperatura)
 importFrom(rlang,.data)
