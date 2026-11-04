@@ -48,12 +48,16 @@
 <div class="section level3">
 <h3 id="cambios-0-0-0-9000">Cambios<a class="anchor" aria-label="anchor" href="#cambios-0-0-0-9000"></a></h3>
 <ul><li>
-<code><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura()</a></code> recibe la variable como texto (entre comillas). Si no se la pasa, resume <code>temperatura_abrigo_150cm</code>.</li>
+<code><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura()</a></code> recibe la variable sin comillas (<code>temperatura_abrigo_150cm</code>) o como texto (<code>"temperatura_abrigo_150cm"</code>). Si no se la pasa, resume <code>temperatura_abrigo_150cm</code>.</li>
 <li>
 <code><a href="../reference/grafico_temperatura_mensual.html">grafico_temperatura_mensual()</a></code> elige colores al azar con <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code> si no se le pasan colores o si hay menos colores que estaciones.</li>
 <li>
-<code><a href="../reference/datos_estacion.html">datos_estacion()</a></code> deja que <code><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file()</a></code> frene con su propio error si la estación no existe, y el ejemplo de la documentación ahora se ejecuta.</li>
-<li>Los mensajes de error de todas las funciones son más simples y los tests revisan el texto de cada mensaje.</li>
+<code><a href="../reference/datos_estacion.html">datos_estacion()</a></code> avisa con un mensaje claro si la descarga falla, no deja archivos incompletos y el ejemplo de la documentación se ejecuta.</li>
+<li>
+<code><a href="../reference/promedio_anual_temperatura.html">promedio_anual_temperatura()</a></code> y <code><a href="../reference/precipitacion_acumulada_mensual.html">precipitacion_acumulada_mensual()</a></code> avisan si <code>datos</code> no tiene filas.</li>
+<li>
+<code><a href="../reference/precipitacion_acumulada_mensual.html">precipitacion_acumulada_mensual()</a></code> cuenta días únicos con dato, no filas.</li>
+<li>Las validaciones de todas las funciones usan <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> y los tests revisan el texto de cada mensaje.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="documentación-0-0-0-9000">Documentación<a class="anchor" aria-label="anchor" href="#documentaci%C3%B3n-0-0-0-9000"></a></h3>

@@ -35518,8 +35518,16 @@ decís qué variable usar, resume la temperatura de abrigo a 150 cm:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> desvio     5.90   5.98   5.77   5.94   6.12</span></span></code></pre></div>
 <p>Como la variable es un argumento, la misma función sirve para
 cualquier otra columna de temperatura. El nombre de la columna se pasa
-<strong>entre comillas</strong>:</p>
+<strong>sin comillas</strong>, como en el libro, o <strong>entre
+comillas</strong>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura</a></span><span class="op">(</span><span class="va">estaciones</span>, <span class="va">temperatura_abrigo_150cm_minima</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
+<span><span class="co">#&gt;   variable NH0046 NH0098 NH0437 NH0472 NH0910</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> media     11.2   12.1   14.6   12.1   10.9 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> desvio     6.19   6.09   6.02   6.28   6.30</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tabla_resumen_temperatura.html">tabla_resumen_temperatura</a></span><span class="op">(</span><span class="va">estaciones</span>, <span class="st">"temperatura_abrigo_150cm_minima"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
 <span><span class="co">#&gt;   variable NH0046 NH0098 NH0437 NH0472 NH0910</span></span>
@@ -35532,7 +35540,7 @@ cualquier otra columna de temperatura. El nombre de la columna se pasa
 </h2>
 <p><code><a href="../reference/promedio_anual_temperatura.html">promedio_anual_temperatura()</a></code> calcula el promedio de la
 temperatura de abrigo a 150 cm para cada estación y cada año:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">promedio_anual</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/promedio_anual_temperatura.html">promedio_anual_temperatura</a></span><span class="op">(</span><span class="va">estaciones</span><span class="op">)</span></span>
 <span><span class="va">promedio_anual</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 272 × 3</span></span></span>
@@ -35552,7 +35560,7 @@ temperatura de abrigo a 150 cm para cada estación y cada año:</p>
 <p>Con el resultado podemos ver si la temperatura media se mantiene
 constante con el tiempo o cambia. Sumamos una regresión lineal con
 <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth()</a></code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">promedio_anual</span> <span class="op">|&gt;</span></span>
@@ -35566,7 +35574,7 @@ constante con el tiempo o cambia. Sumamos una regresión lineal con
 <span>    y <span class="op">=</span> <span class="st">"Temperatura media"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre></div>
-<p><img src="introduccion_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="introduccion_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="precipitación-acumulada-mensual">Precipitación acumulada mensual<a class="anchor" aria-label="anchor" href="#precipitaci%C3%B3n-acumulada-mensual"></a>
@@ -35575,7 +35583,7 @@ constante con el tiempo o cambia. Sumamos una regresión lineal con
 de cada mes en cada estación. También cuenta cuántos días del mes tienen
 dato, para no confundir un mes sin datos (que suma 0) con un mes sin
 lluvia:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/precipitacion_acumulada_mensual.html">precipitacion_acumulada_mensual</a></span><span class="op">(</span><span class="va">estaciones</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,151 × 4</span></span></span>
 <span><span class="co">#&gt;    id     mes        precipitacion_acumulada dias_con_dato</span></span>
@@ -35599,29 +35607,29 @@ lluvia:</p>
 mensual de la temperatura de abrigo y devuelve un gráfico con una línea
 por estación. Recibe los colores y, opcionalmente, el título (por
 defecto <code>"Temperatura"</code>).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/grafico_temperatura_mensual.html">grafico_temperatura_mensual</a></span><span class="op">(</span></span>
 <span>  <span class="va">estaciones</span>,</span>
 <span>  colores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>, <span class="st">"purple"</span>, <span class="st">"cyan4"</span>, <span class="st">"steelblue"</span>, <span class="st">"pink3"</span><span class="op">)</span>,</span>
 <span>  titulo <span class="op">=</span> <span class="st">"Ciclo anual de temperatura"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduccion_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="introduccion_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="672"></p>
 <p>Si no le pasás colores, o le pasás menos colores que estaciones, los
 elige al azar con <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code> y te avisa:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/grafico_temperatura_mensual.html">grafico_temperatura_mensual</a></span><span class="op">(</span><span class="va">estaciones</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No había un color por estación, así que se eligieron al azar.</span></span></code></pre></div>
-<p><img src="introduccion_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="introduccion_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="672"></p>
 <p>Si querés graficar una sola estación, filtrá los datos antes de
 pasarle la tabla:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">estaciones</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op">==</span> <span class="st">"NH0437"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grafico_temperatura_mensual.html">grafico_temperatura_mensual</a></span><span class="op">(</span></span>
 <span>    colores <span class="op">=</span> <span class="st">"darkorange"</span>,</span>
 <span>    titulo <span class="op">=</span> <span class="st">"Reconquista"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="introduccion_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="introduccion_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="672"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

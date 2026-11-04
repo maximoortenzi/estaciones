@@ -21,19 +21,25 @@ siguiente.
 ### Cambios
 
 - [`tabla_resumen_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/tabla_resumen_temperatura.md)
-  recibe la variable como texto (entre comillas). Si no se la pasa,
-  resume `temperatura_abrigo_150cm`.
+  recibe la variable sin comillas (`temperatura_abrigo_150cm`) o como
+  texto (`"temperatura_abrigo_150cm"`). Si no se la pasa, resume
+  `temperatura_abrigo_150cm`.
 - [`grafico_temperatura_mensual()`](https://maximoortenzi.github.io/estaciones/reference/grafico_temperatura_mensual.md)
   elige colores al azar con
   [`colors()`](https://rdrr.io/r/grDevices/colors.html) si no se le
   pasan colores o si hay menos colores que estaciones.
 - [`datos_estacion()`](https://maximoortenzi.github.io/estaciones/reference/datos_estacion.md)
-  deja que
-  [`download.file()`](https://rdrr.io/r/utils/download.file.html) frene
-  con su propio error si la estación no existe, y el ejemplo de la
-  documentación ahora se ejecuta.
-- Los mensajes de error de todas las funciones son más simples y los
-  tests revisan el texto de cada mensaje.
+  avisa con un mensaje claro si la descarga falla, no deja archivos
+  incompletos y el ejemplo de la documentación se ejecuta.
+- [`promedio_anual_temperatura()`](https://maximoortenzi.github.io/estaciones/reference/promedio_anual_temperatura.md)
+  y
+  [`precipitacion_acumulada_mensual()`](https://maximoortenzi.github.io/estaciones/reference/precipitacion_acumulada_mensual.md)
+  avisan si `datos` no tiene filas.
+- [`precipitacion_acumulada_mensual()`](https://maximoortenzi.github.io/estaciones/reference/precipitacion_acumulada_mensual.md)
+  cuenta días únicos con dato, no filas.
+- Las validaciones de todas las funciones usan
+  [`cli::cli_abort()`](https://cli.r-lib.org/reference/cli_abort.html) y
+  los tests revisan el texto de cada mensaje.
 
 ### Documentación
 

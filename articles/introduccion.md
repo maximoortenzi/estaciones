@@ -35468,8 +35468,18 @@ tabla_resumen_temperatura(estaciones)
 ```
 
 Como la variable es un argumento, la misma función sirve para cualquier
-otra columna de temperatura. El nombre de la columna se pasa **entre
-comillas**:
+otra columna de temperatura. El nombre de la columna se pasa **sin
+comillas**, como en el libro, o **entre comillas**:
+
+``` r
+
+tabla_resumen_temperatura(estaciones, temperatura_abrigo_150cm_minima)
+#> # A tibble: 2 × 6
+#>   variable NH0046 NH0098 NH0437 NH0472 NH0910
+#>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
+#> 1 media     11.2   12.1   14.6   12.1   10.9 
+#> 2 desvio     6.19   6.09   6.02   6.28   6.30
+```
 
 ``` r
 
@@ -35528,7 +35538,7 @@ promedio_anual |>
 #> `geom_smooth()` using formula = 'y ~ x'
 ```
 
-![](introduccion_files/figure-html/unnamed-chunk-11-1.png)
+![](introduccion_files/figure-html/unnamed-chunk-12-1.png)
 
 ## Precipitación acumulada mensual
 
@@ -35572,7 +35582,7 @@ grafico_temperatura_mensual(
 )
 ```
 
-![](introduccion_files/figure-html/unnamed-chunk-13-1.png)
+![](introduccion_files/figure-html/unnamed-chunk-14-1.png)
 
 Si no le pasás colores, o le pasás menos colores que estaciones, los
 elige al azar con [`colors()`](https://rdrr.io/r/grDevices/colors.html)
@@ -35584,7 +35594,7 @@ grafico_temperatura_mensual(estaciones)
 #> ℹ No había un color por estación, así que se eligieron al azar.
 ```
 
-![](introduccion_files/figure-html/unnamed-chunk-14-1.png)
+![](introduccion_files/figure-html/unnamed-chunk-15-1.png)
 
 Si querés graficar una sola estación, filtrá los datos antes de pasarle
 la tabla:
@@ -35599,4 +35609,4 @@ estaciones |>
   )
 ```
 
-![](introduccion_files/figure-html/unnamed-chunk-15-1.png)
+![](introduccion_files/figure-html/unnamed-chunk-16-1.png)

@@ -38,7 +38,7 @@ meteorológica.
 ruta <- file.path(tempdir(), "NH0910.csv")
 
 las_rosas <- datos_estacion("NH0910", ruta)
-#> ✔ Se descargó la estación NH0910 en /tmp/RtmpkQ6HiE/NH0910.csv
+#> ✔ Se descargó la estación NH0910 en /tmp/Rtmp385EzH/NH0910.csv
 #> ✔ Leyendo los datos
 las_rosas
 #> # A tibble: 15,553 × 35
