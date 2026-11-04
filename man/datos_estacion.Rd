@@ -25,7 +25,11 @@ repositorio tiene las cinco estaciones de Santa Fe que trae el paquete en
 \link{estaciones}.
 }
 \examples{
-las_rosas <- datos_estacion("NH0910", "datos/NH0910.csv")
+# En tu proyecto usarías una ruta como "datos/NH0910.csv". Acá guardamos el
+# archivo en una carpeta temporal para no dejar archivos sueltos.
+ruta <- file.path(tempdir(), "NH0910.csv")
+
+las_rosas <- datos_estacion("NH0910", ruta)
 las_rosas
 
 }
