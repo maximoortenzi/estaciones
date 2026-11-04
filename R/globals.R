@@ -6,10 +6,12 @@ utils::globalVariables(
     "id",
     "fecha",
     "mes",
+    "anio",
     "media",
     "desvio",
     "valor",
     "temperatura_media",
-    "temperatura_abrigo_150cm"
+    "temperatura_abrigo_150cm",
+    "precipitacion_pluviometrica"
   )
 )
